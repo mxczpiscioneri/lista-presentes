@@ -539,7 +539,7 @@ app.controller('MyPresentsCtrl', function($scope, $sessionStorage, ProductServic
     });
 });
 
-app.controller('PublicCtrl', function($scope, $routeParams, $sessionStorage, $window, $location, EventService, ProductService) {
+app.controller('PublicCtrl', function($scope, $routeParams, $sessionStorage, $window, $location, SweetAlert, EventService, ProductService) {
 
   var userId;
 
@@ -557,9 +557,13 @@ app.controller('PublicCtrl', function($scope, $routeParams, $sessionStorage, $wi
 
   $scope.buy = function(product) {
     if (product.bought > 0) {
-      if ($window.confirm("Este produto já foi comprado por outro convidado. Se realmente desejar comprar este produto, escolha uma loja que ofereça a troca do produto. Obrigado!")) {
-        bought(product);
-      }
+      SweetAlert.confirm("Por favor, escolha uma loja que ofereça a troca do produto.", { title: "Este produto já foi comprado!", confirmButtonText: 'Comprar!', cancelButtonText: 'Escolher outro produto', type: 'info' })
+        .then(function(isConfirm) {
+          if (isConfirm) {
+            bought(product);
+            SweetAlert.success("Este produto foi marcado como comprado.", { title: "Obrigado!" });
+          }
+        });
     } else {
       bought(product);
     }
