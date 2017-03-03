@@ -1,4 +1,4 @@
-app.controller('LoginCtrl', function($scope, $http, $location, $sessionStorage, UserService) {
+app.controller('LoginCtrl', function($scope, $rootScope, $http, $location, $sessionStorage, UserService) {
 
   // Start variables
   $scope.message = {
@@ -10,6 +10,9 @@ app.controller('LoginCtrl', function($scope, $http, $location, $sessionStorage, 
     email: '',
     password: ''
   };
+
+  // Remove loader
+  $rootScope.isLoading = false;
 
   delete $sessionStorage.user;
   delete $sessionStorage.token;
@@ -48,7 +51,7 @@ app.controller('LoginCtrl', function($scope, $http, $location, $sessionStorage, 
   };
 });
 
-app.controller('RegisterCtrl', function($scope, $http, $location, $sessionStorage, UserService) {
+app.controller('RegisterCtrl', function($scope, $rootScope, $http, $location, $sessionStorage, UserService) {
 
   // Start variables
   $scope.message = {
@@ -62,6 +65,9 @@ app.controller('RegisterCtrl', function($scope, $http, $location, $sessionStorag
     email: '',
     password: ''
   };
+
+  // Remove loader
+  $rootScope.isLoading = false;
 
   delete $sessionStorage.user;
   delete $sessionStorage.token;
@@ -131,12 +137,15 @@ app.controller('LogoutCtrl', function($location, $sessionStorage) {
   $location.path('/login');
 });
 
-app.controller('DashboardCtrl', function($scope, $location, $sessionStorage, UserService) {
+app.controller('DashboardCtrl', function($scope, $rootScope, $location, $sessionStorage, UserService) {
 
   var userId = $sessionStorage.user;
 
   UserService.findById(userId)
     .then(function(result) {
+      // Remove loader
+      $rootScope.isLoading = false;
+
       if (result.data.success) {
         UserService.set(result.data.data);
         if (result.data.data.events[0]) {
@@ -174,13 +183,16 @@ app.controller('DashboardCtrl', function($scope, $location, $sessionStorage, Use
   }
 });
 
-app.controller('EventCtrl', function($scope, $sessionStorage, $window, UserService, EventService) {
+app.controller('EventCtrl', function($scope, $rootScope, $sessionStorage, $window, UserService, EventService) {
 
   var userId = $sessionStorage.user;
   $scope.fileUploaded = false;
 
   EventService.findById(userId)
     .then(function(data) {
+      // Remove loader
+      $rootScope.isLoading = false;
+
       if (data.data.success) {
         data.data.data.date = new Date(data.data.data.date);
         $scope.event = data.data.data;
@@ -301,7 +313,7 @@ app.controller('EventCtrl', function($scope, $sessionStorage, $window, UserServi
   }
 });
 
-app.controller('PresentsCtrl', function($scope, $sessionStorage, $window, ProductService) {
+app.controller('PresentsCtrl', function($scope, $rootScope, $sessionStorage, $window, ProductService) {
 
   var userId = $sessionStorage.user;
   $scope.page = 1;
@@ -309,6 +321,9 @@ app.controller('PresentsCtrl', function($scope, $sessionStorage, $window, Produc
 
   ProductService.findAll(userId)
     .then(function(result) {
+      // Remove loader
+      $rootScope.isLoading = false;
+
       if (result.data.success) {
         $scope.myList = result.data.data;
         $scope.getProducts(1, $scope.sort);
@@ -464,12 +479,15 @@ app.controller('PresentsCtrl', function($scope, $sessionStorage, $window, Produc
   });
 });
 
-app.controller('MyListCtrl', function($scope, $sessionStorage, ProductService) {
+app.controller('MyListCtrl', function($scope, $rootScope, $sessionStorage, ProductService) {
 
   var userId = $sessionStorage.user;
 
   ProductService.findAll(userId)
     .then(function(result) {
+      // Remove loader
+      $rootScope.isLoading = false;
+
       if (result.data.success) {
         $scope.myList = result.data.data;
       } else {
@@ -516,12 +534,15 @@ app.controller('MyListCtrl', function($scope, $sessionStorage, ProductService) {
   }
 });
 
-app.controller('MyPresentsCtrl', function($scope, $sessionStorage, ProductService) {
+app.controller('MyPresentsCtrl', function($scope, $rootScope, $sessionStorage, ProductService) {
 
   var userId = $sessionStorage.user;
 
   ProductService.bought(userId)
     .then(function(result) {
+      // Remove loader
+      $rootScope.isLoading = false;
+
       if (result.data.success) {
         $scope.myPresents = result.data.data;
       } else {
@@ -540,12 +561,15 @@ app.controller('MyPresentsCtrl', function($scope, $sessionStorage, ProductServic
     });
 });
 
-app.controller('PublicCtrl', function($scope, $routeParams, $sessionStorage, $window, $location, SweetAlert, EventService, ProductService) {
+app.controller('PublicCtrl', function($scope, $rootScope, $routeParams, $sessionStorage, $window, $location, SweetAlert, EventService, ProductService) {
 
   var userId;
 
   EventService.findByName($routeParams.slug)
     .then(function(result) {
+      // Remove loader
+      $rootScope.isLoading = false;
+
       if (result.data.success) {
         $scope.event = result.data.data.events[0];
         userId = result.data.data._id;
@@ -558,7 +582,12 @@ app.controller('PublicCtrl', function($scope, $routeParams, $sessionStorage, $wi
 
   $scope.buy = function(product) {
     if (product.bought > 0) {
-      SweetAlert.confirm("Escolha uma loja que ofereça a troca do produto.", { title: "Este produto já foi comprado!", confirmButtonText: 'COMPRAR', cancelButtonText: 'Escolher outro produto', type: 'info' })
+      SweetAlert.confirm("Escolha uma loja que ofereça a troca do produto.", {
+          title: "Este produto já foi comprado!",
+          confirmButtonText: 'COMPRAR',
+          cancelButtonText: 'Escolher outro produto',
+          type: 'info'
+        })
         .then(function(isConfirm) {
           if (isConfirm) {
             bought(product);
@@ -570,7 +599,9 @@ app.controller('PublicCtrl', function($scope, $routeParams, $sessionStorage, $wi
   }
 
   function bought(product) {
-    SweetAlert.success("Produto comprado com sucesso.", { title: "Obrigado!" });
+    SweetAlert.success("Produto comprado com sucesso.", {
+      title: "Obrigado!"
+    });
 
     product.bought = (product.bought || 0) + 1;
 
@@ -593,12 +624,15 @@ app.controller('PublicCtrl', function($scope, $routeParams, $sessionStorage, $wi
   }
 });
 
-app.controller('ConfirmationsCtrl', function($scope, $sessionStorage, EventService) {
+app.controller('ConfirmationsCtrl', function($scope, $rootScope, $sessionStorage, EventService) {
 
   var userId = $sessionStorage.user;
 
   EventService.confirmations(userId)
     .then(function(result) {
+      // Remove loader
+      $rootScope.isLoading = false;
+
       if (result.data.success) {
         $scope.confirmations = result.data.data;
       } else {
@@ -617,12 +651,15 @@ app.controller('ConfirmationsCtrl', function($scope, $sessionStorage, EventServi
     });
 });
 
-app.controller('PublicConfirmationCtrl', function($scope, $window, $routeParams, SweetAlert, EventService) {
+app.controller('PublicConfirmationCtrl', function($scope, $rootScope, $window, $routeParams, SweetAlert, EventService) {
 
   var userId;
 
   EventService.findByName($routeParams.slug)
     .then(function(result) {
+      // Remove loader
+      $rootScope.isLoading = false;
+
       if (result.data.success) {
         $scope.event = result.data.data.events[0];
         userId = result.data.data._id;
@@ -652,7 +689,9 @@ app.controller('PublicConfirmationCtrl', function($scope, $window, $routeParams,
     EventService.confirmation(userId, ConfirmationNew)
       .then(function(result) {
         if (result.data.success) {
-          SweetAlert.success("Confirmação realizada com sucesso.", { title: "Obrigado!" });
+          SweetAlert.success("Confirmação realizada com sucesso.", {
+            title: "Obrigado!"
+          });
           $scope.confirmation = {
             name: '',
             accept: '',
@@ -691,12 +730,15 @@ app.controller('PublicConfirmationCtrl', function($scope, $window, $routeParams,
   };
 });
 
-app.controller('DonationsCtrl', function($scope, $sessionStorage, EventService) {
+app.controller('DonationsCtrl', function($scope, $rootScope, $sessionStorage, EventService) {
 
   var userId = $sessionStorage.user;
 
   EventService.donations(userId)
     .then(function(result) {
+      // Remove loader
+      $rootScope.isLoading = false;
+
       if (result.data.success) {
         $scope.donations = result.data.data;
       } else {
@@ -745,12 +787,15 @@ app.controller('DonationsCtrl', function($scope, $sessionStorage, EventService) 
   }
 });
 
-app.controller('PublicDonationCtrl', function($scope, $routeParams, $location, SweetAlert, EventService) {
+app.controller('PublicDonationCtrl', function($scope, $rootScope, $routeParams, $location, SweetAlert, EventService) {
 
   var userId;
 
   EventService.findByName($routeParams.slug)
     .then(function(result) {
+      // Remove loader
+      $rootScope.isLoading = false;
+
       if (result.data.success) {
         $scope.event = result.data.data.events[0];
         userId = result.data.data._id;
@@ -784,7 +829,9 @@ app.controller('PublicDonationCtrl', function($scope, $routeParams, $location, S
             code: result.data.code
           }, {
             success: function(transactionCode) {
-              SweetAlert.success("Doação realizada com sucesso.", { title: "Obrigado!" });
+              SweetAlert.success("Doação realizada com sucesso.", {
+                title: "Obrigado!"
+              });
               $scope.donation = {
                 name: '',
                 email: ''
@@ -812,4 +859,7 @@ app.controller('PublicDonationCtrl', function($scope, $routeParams, $location, S
   }
 });
 
-app.controller('HomeCtrl', function($scope, $routeParams, EventService) {});
+app.controller('HomeCtrl', function($scope, $rootScope, $routeParams, EventService) {
+  // Remove loader
+  $rootScope.isLoading = false;
+});

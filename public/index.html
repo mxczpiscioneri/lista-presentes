@@ -33,7 +33,16 @@
 </head>
 
 <body class="bg-gray">
-  <div ng-view></div>
+  <div ng-view ng-hide="isLoading"></div>
+  <div class="load-mask" ng-show="isLoading"></div>
+  <div class="loader" ng-show="isLoading">
+    <div class="heart">
+      <span class="heartL"></span>
+      <span class="heartR"></span>
+      <span class="square"></span>
+    </div>
+    <div class="shadow"></div>
+  </div>
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-route.min.js"></script>

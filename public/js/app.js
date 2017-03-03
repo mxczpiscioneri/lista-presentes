@@ -96,6 +96,10 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
 });
 
 app.run(function($rootScope, $route, $location, $window) {
+  $rootScope.$on('$routeChangeStart', function() {
+    $rootScope.isLoading = true;
+  });
+
   $rootScope.$on('$routeChangeSuccess', function() {
     // track pageview on state change
     $window.ga('send', 'pageview', $location.path());
