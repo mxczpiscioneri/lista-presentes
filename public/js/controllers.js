@@ -182,7 +182,7 @@ app.controller('EventCtrl', function($scope, $sessionStorage, $window, UserServi
   EventService.findById(userId)
     .then(function(data) {
       if (data.data.success) {
-        data.data.data.date = new Date(data.data.data.date).toLocaleDateString();
+        data.data.data.date = new Date(data.data.data.date);
         $scope.event = data.data.data;
       } else {
         $scope.message = {
@@ -208,10 +208,6 @@ app.controller('EventCtrl', function($scope, $sessionStorage, $window, UserServi
   }
 
   $scope.editEvent = function() {
-    // Format date
-    var parts = $scope.event.date.split('/');
-    $scope.event.date = new Date(parts[2], parts[1] - 1, parts[0]);
-
     // Check if uploaded
     if ($scope.fileUploaded) {
       $scope.upload($scope.event.image);
