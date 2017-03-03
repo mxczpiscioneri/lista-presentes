@@ -203,6 +203,9 @@ app.controller('EventCtrl', function($scope, $rootScope, $sessionStorage, $windo
           'text': data.data.message
         };
       }
+    }, function(resp) {
+      // Remove loader
+      $rootScope.isLoading = false;
     });
 
   // Close alert
