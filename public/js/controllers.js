@@ -208,6 +208,11 @@ app.controller('EventCtrl', function($scope, $sessionStorage, $window, UserServi
   }
 
   $scope.editEvent = function() {
+
+    if (!$scope.event.form.$valid) {
+      return;
+    }
+
     // Check if uploaded
     if ($scope.fileUploaded) {
       $scope.upload($scope.event.image);
@@ -553,11 +558,10 @@ app.controller('PublicCtrl', function($scope, $routeParams, $sessionStorage, $wi
 
   $scope.buy = function(product) {
     if (product.bought > 0) {
-      SweetAlert.confirm("Por favor, escolha uma loja que ofereça a troca do produto.", { title: "Este produto já foi comprado!", confirmButtonText: 'Comprar!', cancelButtonText: 'Escolher outro produto', type: 'info' })
+      SweetAlert.confirm("Escolha uma loja que ofereça a troca do produto.", { title: "Este produto já foi comprado!", confirmButtonText: 'COMPRAR', cancelButtonText: 'Escolher outro produto', type: 'info' })
         .then(function(isConfirm) {
           if (isConfirm) {
             bought(product);
-            SweetAlert.success("Este produto foi marcado como comprado.", { title: "Obrigado!" });
           }
         });
     } else {
@@ -566,6 +570,8 @@ app.controller('PublicCtrl', function($scope, $routeParams, $sessionStorage, $wi
   }
 
   function bought(product) {
+    SweetAlert.success("Produto comprado com sucesso.", { title: "Obrigado!" });
+
     product.bought = (product.bought || 0) + 1;
 
     ProductService.buy(userId, product._id, product.bought)
@@ -611,7 +617,7 @@ app.controller('ConfirmationsCtrl', function($scope, $sessionStorage, EventServi
     });
 });
 
-app.controller('PublicConfirmationCtrl', function($scope, $window, $routeParams, EventService) {
+app.controller('PublicConfirmationCtrl', function($scope, $window, $routeParams, SweetAlert, EventService) {
 
   var userId;
 
@@ -646,11 +652,7 @@ app.controller('PublicConfirmationCtrl', function($scope, $window, $routeParams,
     EventService.confirmation(userId, ConfirmationNew)
       .then(function(result) {
         if (result.data.success) {
-          $scope.message = {
-            'status': true,
-            'type': 'success',
-            'text': 'Confirmação enviada com sucesso!'
-          };
+          SweetAlert.success("Confirmação realizada com sucesso.", { title: "Obrigado!" });
           $scope.confirmation = {
             name: '',
             accept: '',
@@ -743,7 +745,7 @@ app.controller('DonationsCtrl', function($scope, $sessionStorage, EventService) 
   }
 });
 
-app.controller('PublicDonationCtrl', function($scope, $routeParams, $location, EventService) {
+app.controller('PublicDonationCtrl', function($scope, $routeParams, $location, SweetAlert, EventService) {
 
   var userId;
 
@@ -782,10 +784,11 @@ app.controller('PublicDonationCtrl', function($scope, $routeParams, $location, E
             code: result.data.code
           }, {
             success: function(transactionCode) {
-              console.log("success - " + transactionCode);
-            },
-            abort: function() {
-              console.log("abort");
+              SweetAlert.success("Doação realizada com sucesso.", { title: "Obrigado!" });
+              $scope.donation = {
+                name: '',
+                email: ''
+              };
             }
           });
           if (!isOpenLightbox) {
@@ -798,6 +801,7 @@ app.controller('PublicDonationCtrl', function($scope, $routeParams, $location, E
             'text': result.data.message
           };
         }
+        $window.scrollTo(0, angular.element(document.getElementById('header')).offsetTop);
       }, function(status, result) {
         $scope.message = {
           'status': true,
