@@ -177,8 +177,18 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $location, $session
       return el.accept == true;
     });
 
+    var eventDonations = event.donations.filter(function(el) {
+      if (el.status == 3 || el.status == 4)
+        console.log(el);
+      return el.status == 3 || el.status == 4;
+    });
+    var totalDonations = 0;
+    for (var i in eventDonations) {
+      totalDonations += eventDonations[i].amount;
+    }
+
     $scope.eventGifts = eventGifts.length;
-    $scope.eventDonations = 'R$ 123,45';
+    $scope.eventDonations = totalDonations;
     $scope.eventConfirmations = eventConfirmations.length;
   }
 });
@@ -750,7 +760,11 @@ app.controller('DonationsCtrl', function($scope, $rootScope, $sessionStorage, Ev
       $rootScope.isLoading = false;
 
       if (result.data.success) {
-        $scope.donations = result.data.data;
+        var eventDonations = result.data.data.filter(function(el) {
+          return el.status && el.transaction;
+        });
+        $scope.donations = eventDonations;
+
       } else {
         $scope.message = {
           'status': true,
@@ -822,9 +836,10 @@ app.controller('PublicDonationCtrl', function($scope, $rootScope, $routeParams, 
 
   $scope.saveDonation = function(donation) {
 
-    if (!$scope.donation.form.$valid) {
+    if (!$scope.form.$valid) {
       return;
     }
+    document.getElementById("saveDonation").disabled = true;
 
     var DonationNew = {
       name: donation.name,
@@ -858,7 +873,6 @@ app.controller('PublicDonationCtrl', function($scope, $rootScope, $routeParams, 
             'text': result.data.message
           };
         }
-        $window.scrollTo(0, angular.element(document.getElementById('header')).offsetTop);
       }, function(status, result) {
         $scope.message = {
           'status': true,
