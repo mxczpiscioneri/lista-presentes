@@ -68,7 +68,8 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
     })
     .when('/404', {
       pageTitle: 'Página não encontrada',
-      templateUrl: '/views/404.html'
+      templateUrl: '/views/404.html',
+      controller: 'HomeCtrl'
     })
     .when('/:slug', {
       pageTitle: 'Lista de Presentes',

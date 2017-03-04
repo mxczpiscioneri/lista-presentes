@@ -46,3 +46,9 @@ $height-lg: $height-xl - 10;
 $height-md: $height-lg - 10;
 $height-sm: $height-md - 10;
 $height-xs: $height-sm - 10;
+//Size Scale
+$scale-xl: 1.5;
+$scale-lg: $scale-xl - 0.3;
+$scale-md: $scale-lg - 0.1;
+$scale-sm: $scale-md - 0.2;
+$scale-xs: $scale-sm - 0.1;

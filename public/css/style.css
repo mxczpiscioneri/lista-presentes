@@ -59,6 +59,26 @@ body {
   padding-top: 300px;
 }
 
+.icon-heart-xl {
+  font-size: 12em;
+}
+
+.slug {
+  word-break: break-word;
+}
+
+.radio-buttom-check input[type=radio]:checked + span {
+  display: block !important;
+}
+
+.radio-buttom-check input[type=radio] + span + img {
+  border: #FFFFFF 5px solid;
+}
+
+.radio-buttom-check input[type=radio]:checked + span + img {
+  border: #FF564A 5px solid;
+}
+
 @media (max-width: 768px) {
   #banner {
     padding: 0;

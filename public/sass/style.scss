@@ -59,6 +59,26 @@ body {
   }
 }
 
+.icon-heart-xl {
+  font-size: 12em;
+}
+
+.slug {
+  word-break: break-word;
+}
+
+.radio-buttom-check {
+  input[type=radio]:checked + span {
+    display: block !important;
+  }
+  input[type=radio] + span + img {
+    border: $color-white $border-lg solid;
+  }
+  input[type=radio]:checked + span + img {
+    border: $color-primary $border-lg solid;
+  }
+}
+
 @media (max-width: 768px) {
   #banner {
     padding: 0;
@@ -91,14 +111,12 @@ body {
   }
 }
 
-
 // ----- loader ----- //
-
-@mixin animation($name){
+@mixin animation($name) {
   animation: $name 2.5s cubic-bezier(0.750, 0.000, 0.500, 1.000) infinite normal;
 }
 
-@mixin love{
+@mixin love {
   width: 1em;
   height: 1em;
   border: 1px solid $color-primary;
@@ -176,7 +194,6 @@ body {
     border-radius: 100%;
     transform: scale(0.5) rotate(-45deg);
   }
-
   100% {
     transform: scale(1) rotate(-45deg);
   }
@@ -186,7 +203,6 @@ body {
   50% {
     transform: rotate(360deg);
   }
-
   100% {
     transform: rotate(720deg);
   }

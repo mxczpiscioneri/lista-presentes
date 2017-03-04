@@ -734,6 +734,35 @@
 }
 
 
+/* Transform
+  ========================================================================== */
+
+
+/**
+ * Scale
+ */
+
+.scale-xl:hover {
+  transform: scale($scale-xl);
+}
+
+.scale-lg:hover {
+  transform: scale($scale-lg);
+}
+
+.scale-md:hover {
+  transform: scale($scale-md);
+}
+
+.scale-sm:hover {
+  transform: scale($scale-sm);
+}
+
+.scale-xs:hover {
+  transform: scale($scale-xs);
+}
+
+
 /* Visibility
   ========================================================================== */
 

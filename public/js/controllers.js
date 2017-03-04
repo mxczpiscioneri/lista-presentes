@@ -224,7 +224,7 @@ app.controller('EventCtrl', function($scope, $rootScope, $sessionStorage, $windo
 
   $scope.editEvent = function() {
 
-    if (!$scope.event.form.$valid) {
+    if (!$scope.form.$valid) {
       return;
     }
 
@@ -283,7 +283,9 @@ app.controller('EventCtrl', function($scope, $rootScope, $sessionStorage, $windo
   };
 
   $scope.$watch('event.name', function() {
-    $scope.event.slug = slugGenerate($scope.event.name);
+    if ($scope.event.name) {
+      $scope.event.slug = slugGenerate($scope.event.name);
+    }
   });
 
   // Generate slug
@@ -321,6 +323,7 @@ app.controller('PresentsCtrl', function($scope, $rootScope, $sessionStorage, $wi
   var userId = $sessionStorage.user;
   $scope.page = 1;
   $scope.sort = 'rate';
+  $scope.isLoadingBuscape = true;
 
   ProductService.findAll(userId)
     .then(function(result) {
@@ -350,6 +353,8 @@ app.controller('PresentsCtrl', function($scope, $rootScope, $sessionStorage, $wi
   $scope.getProducts = function(page, sort) {
 
     var search = $scope.search ? $scope.search : 'eletrodomestico';
+    // Show loader
+    $scope.isLoadingBuscape = true;
 
     ProductService.searchBuscape(search, page, sort)
       .then(function(data) {
@@ -381,6 +386,8 @@ app.controller('PresentsCtrl', function($scope, $rootScope, $sessionStorage, $wi
             'text': data.data.message
           };
         }
+        // Remove loader
+        $scope.isLoadingBuscape = false;
       }, function(status, data) {
         $scope.message = {
           'status': true,

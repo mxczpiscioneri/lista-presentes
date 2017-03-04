@@ -972,6 +972,28 @@ select.field option[disabled] {
   color: #FF564A;
 }
 
+.btn-white-hover {
+  border: #FFFFFF 2px solid;
+  color: #FFFFFF;
+}
+
+.btn-white-hover:hover {
+  background-color: #FFFFFF;
+  border: #FFFFFF 2px solid;
+  color: #FF564A;
+}
+
+.btn-secondary-hover {
+  border: #C74A50 2px solid;
+  color: #C74A50;
+}
+
+.btn-secondary-hover:hover {
+  background-color: #C74A50;
+  border: #C74A50 2px solid;
+  color: #FFFFFF;
+}
+
 /**
  * Button State
  */
@@ -1815,6 +1837,31 @@ select.field option[disabled] {
   -moz-transition: all 600ms;
   -webkit-transition: all 600ms;
   -o-transition: all 600ms;
+}
+
+/* Transform
+  ========================================================================== */
+/**
+ * Scale
+ */
+.scale-xl:hover {
+  transform: scale(1.5);
+}
+
+.scale-lg:hover {
+  transform: scale(1.2);
+}
+
+.scale-md:hover {
+  transform: scale(1.1);
+}
+
+.scale-sm:hover {
+  transform: scale(0.9);
+}
+
+.scale-xs:hover {
+  transform: scale(0.8);
 }
 
 /* Visibility

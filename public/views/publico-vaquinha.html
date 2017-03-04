@@ -29,46 +29,50 @@
           </div>
           <div class="grid-row">
             <div class="grid-md-3 grid-sm-6 grid-xs-12 margin-bottom-xl">
-              <label class="inline-block align-center pointer">
-                <input type="radio" ng-model="donation.amount" value="100.00">
+              <label class="radio-buttom-check relative inline-block align-center pointer">
+                <input type="radio" class="hidden" ng-model="donation.amount" value="100.00" required>
+                <span class="absolute position-top position-left text-xl text-white bg-primary icon-md hidden">&#10004;</span>
                 <img src="/uploads/presente-cafe.jpg" alt="" class="img">
                 <span class="text-lg text-default block">R$ 100,00</span>
               </label>
             </div>
             <div class="grid-md-3 grid-sm-6 grid-xs-12 margin-bottom-xl">
-              <label class="inline-block align-center pointer">
-                <input type="radio" ng-model="donation.amount" value="150.00">
+              <label class="radio-buttom-check relative inline-block align-center pointer">
+                <input type="radio" class="hidden" ng-model="donation.amount" value="150.00" required>
+                <span class="absolute position-top position-left text-xl text-white bg-primary icon-md hidden">&#10004;</span>
                 <img src="/uploads/presente-jantar.jpg" alt="" class="img">
                 <span class="text-lg text-default block">R$ 150,00</span>
               </label>
             </div>
             <div class="grid-md-3 grid-sm-6 grid-xs-12 margin-bottom-xl">
-              <label class="inline-block align-center pointer">
-                <input type="radio" ng-model="donation.amount" value="200.00">
+              <label class="radio-buttom-check relative inline-block align-center pointer">
+                <input type="radio" class="hidden" ng-model="donation.amount" value="200.00" required>
+                <span class="absolute position-top position-left text-xl text-white bg-primary icon-md hidden">&#10004;</span>
                 <img src="/uploads/presente-hospedagem.jpg" alt="" class="img">
                 <span class="text-lg text-default block">R$ 200,00</span>
               </label>
             </div>
             <div class="grid-md-3 grid-sm-6 grid-xs-12 margin-bottom-xl">
-              <label class="inline-block align-center pointer">
-                <input type="radio" ng-model="donation.amount" value="500.00">
+              <label class="radio-buttom-check relative inline-block align-center pointer">
+                <input type="radio" class="hidden" ng-model="donation.amount" value="500.00" required>
+                <span class="absolute position-top position-left text-xl text-white bg-primary icon-md hidden">&#10004;</span>
                 <img src="/uploads/presente-passagem.jpg" alt="" class="img">
                 <span class="text-lg text-default block">R$ 500,00</span>
               </label>
             </div>
           </div>
-          <div ng-show="donation.amount" class="grid-row margin-bottom-xl">
-            <div class="grid-xs-6">
+          <div ng-show="donation.amount" class="grid-row">
+            <div class="grid-sm-6 grid-xs-12 margin-bottom-xl">
               <label class="text-sm text-default">Nome:</label>
               <input id="name" class="field text-field text-field-lg" type="text" ng-model="donation.name" required>
             </div>
-            <div class="grid-xs-6">
+            <div class="grid-sm-6 grid-xs-12 margin-bottom-xl">
               <label class="text-sm text-default">E-mail:</label>
               <input id="name" class="field text-field text-field-lg" type="text" ng-model="donation.email" required>
             </div>
           </div>
           <div class="grid-row margin-bottom-xl">
-            <div class="grid-md-2 grid-md-offset-10 grid-sm-3 grid-sm-offset-9 grid-xs-6 grid-xs-offset-6">
+            <div class="grid-md-2 grid-md-offset-10 grid-sm-3 grid-sm-offset-9 grid-xs-12">
               <button class="btn-lg btn-primary" ng-click="saveDonation(donation)">Pagar</button>
             </div>
           </div>

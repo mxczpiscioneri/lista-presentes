@@ -24,7 +24,7 @@
           <form>
             <div class="grid-xs-12">
               <label for="filter-price" class="text-xs text-default margin-bottom-xs">Procurar produtos:</label>
-              <input ng-model="search" ng-model-options='{ debounce: 200 }' type="text" id="search" name="search" class="field text-field-md" placeholder="Digite o nome do produto...">
+              <input ng-model="search" ng-model-options='{ debounce: 200 }' type="text" id="search" name="search" class="field text-field-lg" placeholder="Digite o nome do produto...">
             </div>
           </form>
         </div>
@@ -40,7 +40,7 @@
                 <a vertilize class="text-xs text-default block" title="{{item.name}}" href="{{item.link}}" target="_blank">{{item.name}}</a>
                 <p class="text-xs text-default margin-top-sm margin-bottom-sm">De: <span class="text-md text-primary bold">R$ {{item.pricemin}}</span></p>
                 <p class="text-xs text-default clear-margin">Até: <span class="text-sm text-primary bold">R$ {{item.pricemax}}</span></p>
-                <button ng-click="remove(item._id)" class="btn-sm btn-default margin-top-sm">- REMOVER</button>
+                <button ng-click="remove(item._id)" class="btn-md btn-default margin-top-sm">- REMOVER</button>
               </div>
             </li>
           </ul>
