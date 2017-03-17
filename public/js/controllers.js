@@ -45,7 +45,7 @@ app.controller('LoginCtrl', function($scope, $rootScope, $http, $location, $sess
         $scope.message = {
           'status': true,
           'type': 'error',
-          'text': 'Erro!'
+          'text': 'E-mail ou senha incorreto!'
         };
       });
   };
@@ -119,7 +119,7 @@ app.controller('RegisterCtrl', function($scope, $rootScope, $http, $location, $s
           $scope.message = {
             'status': true,
             'type': 'error',
-            'text': 'Este e-mail já existe, faça o login!'
+            'text': 'E-mail já existe, faça o login!'
           };
         else
           $scope.message = {
@@ -278,16 +278,24 @@ app.controller('EventCtrl', function($scope, $rootScope, $sessionStorage, $windo
           $scope.message = {
             'status': true,
             'type': 'error',
-            'text': resp.data.message
+            'text': 'Erro!'
           };
         }
         $window.scrollTo(0, angular.element(document.getElementById('header')).offsetTop);
-      }, function(status, resp) {
-        $scope.message = {
-          'status': true,
-          'type': 'error',
-          'text': 'Este site já existe, escolha outro por favor!'
-        };
+      }, function(error) {
+        if (error.data.message == 'Duplicate slug') {
+          $scope.message = {
+            'status': true,
+            'type': 'error',
+            'text': 'E-mail nome de site já existe, escolha outro!'
+          };
+        } else {
+          $scope.message = {
+            'status': true,
+            'type': 'error',
+            'text': 'Erro!'
+          };
+        }
         $window.scrollTo(0, angular.element(document.getElementById('header')).offsetTop);
       });
   };
