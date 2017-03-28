@@ -178,8 +178,6 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $location, $session
     });
 
     var eventDonations = event.donations.filter(function(el) {
-      if (el.status == 3 || el.status == 4)
-        console.log(el);
       return el.status == 3 || el.status == 4;
     });
     var totalDonations = 0;
@@ -197,6 +195,7 @@ app.controller('EventCtrl', function($scope, $rootScope, $sessionStorage, $windo
 
   var userId = $sessionStorage.user;
   $scope.fileUploaded = false;
+  $scope.checkPassword = "false";
 
   EventService.findById(userId)
     .then(function(data) {
@@ -206,6 +205,7 @@ app.controller('EventCtrl', function($scope, $rootScope, $sessionStorage, $windo
       if (data.data.success) {
         data.data.data.date = new Date(data.data.data.date);
         $scope.event = data.data.data;
+        $scope.checkPassword = data.data.data.password ? "true" : "false";
       } else {
         $scope.message = {
           'status': true,
@@ -265,6 +265,10 @@ app.controller('EventCtrl', function($scope, $rootScope, $sessionStorage, $windo
     if (image) {
       $scope.event.image = image;
     }
+    // Clear password
+    if ($scope.checkPassword == "false") {
+      $scope.event.password = null;
+    }
     EventService.update(userId, $scope.event)
       .then(function(resp) {
         if (resp.data.success) {
@@ -287,7 +291,7 @@ app.controller('EventCtrl', function($scope, $rootScope, $sessionStorage, $windo
           $scope.message = {
             'status': true,
             'type': 'error',
-            'text': 'E-mail nome de site já existe, escolha outro!'
+            'text': 'Este nome de site já existe, escolha outro!'
           };
         } else {
           $scope.message = {
@@ -592,21 +596,55 @@ app.controller('MyPresentsCtrl', function($scope, $rootScope, $sessionStorage, P
 app.controller('PublicCtrl', function($scope, $rootScope, $routeParams, $sessionStorage, $window, $location, SweetAlert, EventService, ProductService) {
 
   var userId;
+  $scope.needPassword = false;
 
-  EventService.findByName($routeParams.slug)
+  EventService.findByName($routeParams.slug, $sessionStorage.passwordEvent)
     .then(function(result) {
       // Remove loader
       $rootScope.isLoading = false;
 
       if (result.data.success) {
-        $scope.event = result.data.data.events[0];
-        userId = result.data.data._id;
+        if (result.data.password) {
+          $scope.needPassword = true;
+          userId = result.data.data;
+        } else {
+          $scope.event = result.data.data.events[0];
+          userId = result.data.data._id;
+        }
       } else {
         $location.path("/404");
       }
     }, function(status, result) {
       $location.path("/404");
     });
+
+  $scope.submitPassword = function() {
+    $rootScope.isLoading = true;
+
+    EventService.findByIdPassword(userId, $scope.password)
+      .then(function(result) {
+        // Remove loader
+        $rootScope.isLoading = false;
+
+        if (result.data.success) {
+          $scope.event = result.data.data;
+          $scope.needPassword = false;
+          $sessionStorage.passwordEvent = $scope.password;
+        } else {
+          $scope.message = {
+            'status': true,
+            'type': 'error',
+            'text': 'Senha inválida!'
+          };
+        }
+      }, function(status, result) {
+        $scope.message = {
+          'status': true,
+          'type': 'error',
+          'text': 'Erro!'
+        };
+      });
+  }
 
   $scope.buy = function(product) {
     if (product.bought > 0) {

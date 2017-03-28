@@ -114,6 +114,23 @@
           <hr>
           <div class="grid-row">
             <div class="grid-xs-12">
+              <h3 class="text-sm text-default">Privacidade</h3>
+            </div>
+          </div>
+          <div class="grid-row">
+            <div class="grid-sm-6 grid-xs-12 margin-bottom-xl">
+              <label class="text-sm text-default block">Deseja solicitar senha ao abrir sua lista?</label>
+              <label><input type="radio" name="checkPassword" ng-model="checkPassword" value="false"> Não</label>
+              <label><input type="radio" name="checkPassword" ng-model="checkPassword" value="true"> Sim </label>
+            </div>
+            <div ng-show="checkPassword == 'true'" class="grid-sm-6 grid-xs-12 margin-bottom-xl">
+              <label class="text-sm text-default">Digite a senha:</label>
+              <input class="field text-field text-field-lg" type="text" ng-model="event.password">
+            </div>
+          </div>
+          <hr>
+          <div class="grid-row">
+            <div class="grid-xs-12">
               <h3 class="text-sm text-default">Vaquinha</h3>
             </div>
           </div>

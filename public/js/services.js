@@ -50,8 +50,11 @@ app.factory('EventService', function($http, Upload) {
     findById: function(userId) {
       return $http.get(API_ENDPOINT + '/users/' + userId + '/events/');
     },
-    findByName: function(slug) {
-      return $http.get(API_ENDPOINT + '/events/' + slug);
+    findByIdPassword: function(userId, password) {
+      return $http.get(API_ENDPOINT + '/users/' + userId + '/events/password/' + password);
+    },
+    findByName: function(slug, password) {
+      return $http.get(API_ENDPOINT + '/events/' + slug + '/' + password);
     },
     confirmations: function(userId) {
       return $http.get(API_ENDPOINT + '/users/' + userId + '/events/confirmations');
