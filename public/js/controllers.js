@@ -196,6 +196,7 @@ app.controller('EventCtrl', function($scope, $rootScope, $sessionStorage, $windo
   var userId = $sessionStorage.user;
   $scope.fileUploaded = false;
   $scope.checkPassword = "false";
+  $scope.createSlug = true;
 
   EventService.findById(userId)
     .then(function(data) {
@@ -205,7 +206,13 @@ app.controller('EventCtrl', function($scope, $rootScope, $sessionStorage, $windo
       if (data.data.success) {
         data.data.data.date = new Date(data.data.data.date);
         $scope.event = data.data.data;
+        if (!$scope.event.image) {
+          $scope.event.image = "cover-default1.jpg";
+        }
         $scope.checkPassword = data.data.data.password ? "true" : "false";
+        if (data.data.data.slug) {
+          $scope.createSlug = false;
+        }
       } else {
         $scope.message = {
           'status': true,
@@ -305,7 +312,7 @@ app.controller('EventCtrl', function($scope, $rootScope, $sessionStorage, $windo
   };
 
   $scope.$watch('event.name', function() {
-    if ($scope.event.name) {
+    if ($scope.event.name && $scope.createSlug) {
       $scope.event.slug = slugGenerate($scope.event.name);
     }
   });
@@ -729,6 +736,7 @@ app.controller('PublicConfirmationCtrl', function($scope, $rootScope, $window, $
       if (result.data.success) {
         $scope.event = result.data.data.events[0];
         userId = result.data.data._id;
+        $scope.confirmation = { accept: "true" };
       } else {
         $location.path("/404");
       }

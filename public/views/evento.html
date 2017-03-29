@@ -30,7 +30,7 @@
           <div class="grid-row margin-top-xl margin-bottom-xl">
             <div class="grid-xs-12">
               <label class="text-sm text-default">Nome:</label>
-              <input id="name" class="field text-field text-field-lg" type="text" ng-model="event.name" autofocus required>
+              <input id="name" class="field text-field text-field-lg" type="text" ng-model="event.name" required>
             </div>
           </div>
           <div class="grid-row margin-top-xl margin-bottom-xl">
@@ -119,9 +119,9 @@
           </div>
           <div class="grid-row">
             <div class="grid-sm-6 grid-xs-12 margin-bottom-xl">
-              <label class="text-sm text-default block">Deseja solicitar senha ao abrir sua lista?</label>
-              <label><input type="radio" name="checkPassword" ng-model="checkPassword" value="false"> Não</label>
-              <label><input type="radio" name="checkPassword" ng-model="checkPassword" value="true"> Sim </label>
+              <label class="text-sm text-default margin-bottom-xs block">Deseja solicitar senha ao abrir sua lista?</label>
+              <label class="margin-right-lg"><input type="radio" name="checkPassword" ng-model="checkPassword" value="false"> Não</label>
+              <label class="margin-right-lg"><input type="radio" name="checkPassword" ng-model="checkPassword" value="true"> Sim</label>
             </div>
             <div ng-show="checkPassword == 'true'" class="grid-sm-6 grid-xs-12 margin-bottom-xl">
               <label class="text-sm text-default">Digite a senha:</label>

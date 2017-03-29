@@ -43,23 +43,6 @@
             </div>
           </div>
           <div class="grid-row">
-            <div class="grid-md-4 grid-xs-12 margin-bottom-xl">
-              <label class="text-sm text-default">Confirmar:</label>
-              <select ng-model="confirmation.accept" class="field text-field-lg select" required>
-                <option value="true">Sim</option>
-                <option value="false">Não</option>
-              </select>
-            </div>
-            <div class="grid-md-4 grid-xs-12 margin-bottom-xl">
-              <label class="text-sm text-default">Número de adultos:</label>
-              <input id="adults" class="field text-field text-field-lg" type="number" mask="9" ng-model="confirmation.adults" required>
-            </div>
-            <div class="grid-md-4 grid-xs-12 margin-bottom-xl">
-              <label class="text-sm text-default">Número de crianças:</label>
-              <input id="children" class="field text-field text-field-lg" type="number" mask="9" ng-model="confirmation.children" required>
-            </div>
-          </div>
-          <div class="grid-row">
             <div class="grid-sm-6 grid-xs-12 margin-bottom-xl">
               <label class="text-sm text-default">E-mail:</label>
               <input id="email" class="field text-field text-field-lg" type="email" ng-model="confirmation.email">
@@ -67,6 +50,21 @@
             <div class="grid-sm-6 grid-xs-12 margin-bottom-xl">
               <label class="text-sm text-default">Telefone:</label>
               <input id="phone" class="field text-field text-field-lg" type="text" mask="(99) 9?9999-9999" ng-model="confirmation.phone">
+            </div>
+          </div>
+          <div class="grid-row">
+            <div class="grid-md-4 grid-xs-12 margin-bottom-xl">
+              <label class="text-sm text-default margin-bottom-xs block">Confirmar:</label>
+              <label class="margin-right-lg"><input type="radio" ng-model="confirmation.accept" value="true"> Sim</label>
+              <label class="margin-right-lg"><input type="radio" ng-model="confirmation.accept" value="false"> Não</label>
+            </div>
+            <div ng-show="confirmation.accept == 'true'" class="grid-md-4 grid-xs-12 margin-bottom-xl">
+              <label class="text-sm text-default">Número de adultos:</label>
+              <input id="adults" class="field text-field text-field-lg" type="number" mask="9" ng-model="confirmation.adults" required>
+            </div>
+            <div ng-show="confirmation.accept == 'true'" class="grid-md-4 grid-xs-12 margin-bottom-xl">
+              <label class="text-sm text-default">Número de crianças:</label>
+              <input id="children" class="field text-field text-field-lg" type="number" mask="9" ng-model="confirmation.children" required>
             </div>
           </div>
           <div class="grid-row margin-bottom-xl">
