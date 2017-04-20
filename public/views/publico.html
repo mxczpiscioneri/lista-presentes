@@ -62,45 +62,20 @@
 </div>
 <!-- content -->
 <div class="grid-container margin-top-sm">
-  <!-- password -->
-  <div ng-show="needPassword" class="grid-row">
-    <div class="grid-lg-4 grid-lg-offset-4 grid-sm-6 grid-sm-offset-3 grid-xs-12 margin-top-xl">
-      <div class="bg-white box-shadow margin-top-xl margin-bottom-sm">
-        <div class="login-header bg-primary padding-top-sm padding-bottom-sm padding-left-xl padding-right-xl">
-          <a href="/" class="text-lg text-white align-center block padding-md clear-decoration">
-            <img src="img/icon-lista-de-presentes-white.png" class="align-top margin-right-sm" alt="LISTA DE PRESENTES"> LOGIN
-          </a>
-        </div>
-        <div class="login-content padding-xl">
-          <div class="bg-light text-red text-center margin-bottom-lg padding-sm" ng-class="message.type" ng-show="message.status" role="alert">
-            {{message.text}}
-            <span class="pull-right pointer" ng-click="closeAlert()"><span aria-hidden="true">&times;</span></span>
-          </div>
-          <form class="login-form" name="form" ng-submit="submitPassword()" novalidate>
-            <div class="margin-bottom-lg">
-              <label class="text-xs text-default" for="password">Senha do evento</label>
-              <input ng-model="password" type="text" class="field text-field text-field-lg" placeholder="Digite a senha..." required>
-              <span ng-show="form.password.$invalid && !form.password.$pristine" class="absolute margin-top-xs text-xxs text-red">Digite uma senha.</span>
-            </div>
-            <input type="submit" ng-disabled="form.$invalid" class="btn-lg btn-primary" value="ENTRAR">
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
   <!-- products -->
   <div class="grid-row">
     <ul vertilize-container class="list list-horizontal">
       <li ng-repeat="product in event.products | filter: search" class="list-item grid-lg-3 grid-md-4 grid-sm-6 grid-xs-12 margin-bottom-lg">
-        <div class="bg-white bd-radius-md padding-lg box-shadow">
+        <div class="bg-white bd-radius-md padding-lg box-shadow relative">
+          <span class="text-xs text-white bg-darkgray bd-radius-md absolute position-top position-right padding-xs margin-sm">{{product.bought || 0}} comprados</span>
           <div class="align-center">
-            <img title="{{product.name}}" class="img margin-bottom-sm" alt="{{product.name}}" src="{{product.image}}">
+            <img title="{{product.name}}" class="img margin-bottom-sm" alt="{{product.name}}"  title="{{product.name}}" src="{{product.image}}">
           </div>
-          <a vertilize class="text-sm text-default block" title="{{product.name}}" href="{{product.link}}">{{product.name}}</a>
+          <p vertilize class="text-sm text-default block">{{product.name}}</a>
           <p class="text-xs text-default margin-top-sm margin-bottom-sm">De: <span class="text-lg text-primary bold">R$ {{product.pricemin}}</span></p>
           <p class="text-xs text-default clear-margin">Até: <span class="text-md text-primary bold">R$ {{product.pricemax}}</span></p>
-          <p class="text-xs text-darkgray align-center margin-bottom-xs">{{product.bought || 0}} comprados</p>
-          <button ng-click="buy(product)" class="btn-lg btn-primary">COMPRAR</button>
+          <a href="{{product.link}}" target="_blank" class="text-sm text-primary align-center block margin-top-md margin-bottom-lg">Comprar aqui</a>
+          <button ng-click="buy(product)" class="btn-lg btn-primary">Marcar como comprado!</button>
         </div>
       </li>
     </ul>

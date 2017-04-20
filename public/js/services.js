@@ -50,11 +50,8 @@ app.factory('EventService', function($http, Upload) {
     findById: function(userId) {
       return $http.get(API_ENDPOINT + '/users/' + userId + '/events/');
     },
-    findByIdPassword: function(userId, password) {
-      return $http.get(API_ENDPOINT + '/users/' + userId + '/events/password/' + password);
-    },
-    findByName: function(slug, password) {
-      return $http.get(API_ENDPOINT + '/events/' + slug + '/' + password);
+    findByName: function(slug) {
+      return $http.get(API_ENDPOINT + '/events/' + slug);
     },
     confirmations: function(userId) {
       return $http.get(API_ENDPOINT + '/users/' + userId + '/events/confirmations');
@@ -91,8 +88,8 @@ app.factory('ProductService', function($http) {
     findById: function(userId, productId) {
       return $http.get(API_ENDPOINT + '/users/' + userId + '/products/' + productId);
     },
-    buy: function(userId, productId, bought) {
-      return $http.get(API_ENDPOINT + '/users/' + userId + '/products/' + productId + '/buy/' + bought);
+    buy: function(userId, productId, bought, password) {
+      return $http.get(API_ENDPOINT + '/users/' + userId + '/products/' + productId + '/buy/' + bought + '/password/' + password);
     },
     bought: function(userId) {
       return $http.get(API_ENDPOINT + '/users/' + userId + '/products/bought');

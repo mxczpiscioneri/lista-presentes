@@ -600,12 +600,12 @@ app.controller('MyPresentsCtrl', function($scope, $rootScope, $sessionStorage, P
     });
 });
 
-app.controller('PublicCtrl', function($scope, $rootScope, $routeParams, $sessionStorage, $window, $location, SweetAlert, EventService, ProductService) {
+app.controller('PublicCtrl', function($scope, $rootScope, $routeParams, $location, EventService, ProductService) {
 
   var userId;
   $scope.needPassword = false;
 
-  EventService.findByName($routeParams.slug, $sessionStorage.passwordEvent)
+  EventService.findByName($routeParams.slug)
     .then(function(result) {
       // Remove loader
       $rootScope.isLoading = false;
@@ -613,11 +613,9 @@ app.controller('PublicCtrl', function($scope, $rootScope, $routeParams, $session
       if (result.data.success) {
         if (result.data.password) {
           $scope.needPassword = true;
-          userId = result.data.data;
-        } else {
-          $scope.event = result.data.data.events[0];
-          userId = result.data.data._id;
         }
+        $scope.event = result.data.data.events[0];
+        userId = result.data.data._id;
       } else {
         $location.path("/404");
       }
@@ -625,67 +623,41 @@ app.controller('PublicCtrl', function($scope, $rootScope, $routeParams, $session
       $location.path("/404");
     });
 
-  $scope.submitPassword = function() {
-    $rootScope.isLoading = true;
-
-    EventService.findByIdPassword(userId, $scope.password)
-      .then(function(result) {
-        // Remove loader
-        $rootScope.isLoading = false;
-
-        if (result.data.success) {
-          $scope.event = result.data.data;
-          $scope.needPassword = false;
-          $sessionStorage.passwordEvent = $scope.password;
-        } else {
-          $scope.message = {
-            'status': true,
-            'type': 'error',
-            'text': 'Senha inválida!'
-          };
-        }
-      }, function(status, result) {
-        $scope.message = {
-          'status': true,
-          'type': 'error',
-          'text': 'Erro!'
-        };
-      });
-  }
-
   $scope.buy = function(product) {
-    if (product.bought > 0) {
-      SweetAlert.confirm("Escolha uma loja que ofereça a troca do produto.", {
-          title: "Este produto já foi comprado!",
-          confirmButtonText: 'COMPRAR',
-          cancelButtonText: 'Escolher outro produto',
-          type: 'info'
-        })
-        .then(function(isConfirm) {
-          if (isConfirm) {
-            bought(product);
+    if ($scope.needPassword) {
+      swal({
+          title: "Digite a senha",
+          text: "Por favor, insira a senha que veio no convite:",
+          type: "input",
+          showCancelButton: true,
+          closeOnConfirm: false,
+          animation: "slide-from-top",
+          inputPlaceholder: "Digite a senha"
+        },
+        function(inputValue) {
+          if (inputValue === false) return false;
+
+          if (inputValue === "") {
+            swal.showInputError("Por favor, digite a senha!");
+            return false
           }
+
+          bought(product, inputValue);
         });
     } else {
-      bought(product);
+      bought(product, false);
     }
   }
 
-  function bought(product) {
-    SweetAlert.success("Produto comprado com sucesso.", {
-      title: "Obrigado!"
-    });
-
-    product.bought = (product.bought || 0) + 1;
-
-    ProductService.buy(userId, product._id, product.bought)
+  function bought(product, password) {
+    ProductService.buy(userId, product._id, product.bought, password)
       .then(function(result) {
-        if (!result.data.success) {
-          $scope.message = {
-            'status': true,
-            'type': 'error',
-            'text': result.data.message
-          };
+        if (result.data.success) {
+          product.bought = (product.bought || 0) + 1;
+          swal("Obrigado!", "Produto marcado como comprado com sucesso.", "success");
+        } else {
+          swal.showInputError("Senha incorreta!");
+          return false
         }
       }, function(status, result) {
         $scope.message = {
@@ -724,7 +696,7 @@ app.controller('ConfirmationsCtrl', function($scope, $rootScope, $sessionStorage
     });
 });
 
-app.controller('PublicConfirmationCtrl', function($scope, $rootScope, $window, $routeParams, SweetAlert, EventService) {
+app.controller('PublicConfirmationCtrl', function($scope, $rootScope, $window, $routeParams, EventService) {
 
   var userId;
 
@@ -763,9 +735,7 @@ app.controller('PublicConfirmationCtrl', function($scope, $rootScope, $window, $
     EventService.confirmation(userId, ConfirmationNew)
       .then(function(result) {
         if (result.data.success) {
-          SweetAlert.success("Confirmação realizada com sucesso.", {
-            title: "Obrigado!"
-          });
+          swal("Obrigado!", "Confirmação realizada com sucesso.", "success");
           $scope.confirmation = {
             name: '',
             accept: '',
@@ -865,7 +835,7 @@ app.controller('DonationsCtrl', function($scope, $rootScope, $sessionStorage, Ev
   }
 });
 
-app.controller('PublicDonationCtrl', function($scope, $rootScope, $routeParams, $location, SweetAlert, EventService) {
+app.controller('PublicDonationCtrl', function($scope, $rootScope, $routeParams, $location, EventService) {
 
   var userId;
 
@@ -908,9 +878,7 @@ app.controller('PublicDonationCtrl', function($scope, $rootScope, $routeParams, 
             code: result.data.code
           }, {
             success: function(transactionCode) {
-              SweetAlert.success("Doação realizada com sucesso.", {
-                title: "Obrigado!"
-              });
+              swal("Obrigado!", "Doação realizada com sucesso.", "success");
               $scope.donation = {
                 name: '',
                 email: ''
