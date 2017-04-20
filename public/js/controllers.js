@@ -650,10 +650,11 @@ app.controller('PublicCtrl', function($scope, $rootScope, $routeParams, $locatio
   }
 
   function bought(product, password) {
-    ProductService.buy(userId, product._id, product.bought, password)
+    var bought = (product.bought || 0) + 1;
+    ProductService.buy(userId, product._id, bought, password)
       .then(function(result) {
         if (result.data.success) {
-          product.bought = (product.bought || 0) + 1;
+          product.bought = bought;
           swal("Obrigado!", "Produto marcado como comprado com sucesso.", "success");
         } else {
           swal.showInputError("Senha incorreta!");

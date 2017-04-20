@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ngRoute', 'ngStorage', 'ngFileUpload', 'angular.vertilize', 'ng-sweet-alert']);
+var app = angular.module('myApp', ['ngRoute', 'ngStorage', 'ngFileUpload', 'angular.vertilize']);
 
 var API_ENDPOINT = "https://listadepresentes-api.herokuapp.com/api";
 
