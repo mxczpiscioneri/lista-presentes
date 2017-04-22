@@ -632,7 +632,8 @@ app.controller('PublicCtrl', function($scope, $rootScope, $routeParams, $locatio
           showCancelButton: true,
           closeOnConfirm: false,
           animation: "slide-from-top",
-          inputPlaceholder: "Digite a senha"
+          inputPlaceholder: "Digite a senha",
+          confirmButtonColor: "#FF564A"
         },
         function(inputValue) {
           if (inputValue === false) return false;
@@ -655,7 +656,13 @@ app.controller('PublicCtrl', function($scope, $rootScope, $routeParams, $locatio
       .then(function(result) {
         if (result.data.success) {
           product.bought = bought;
-          swal("Obrigado!", "Produto marcado como comprado com sucesso.", "success");
+          swal({
+            title: "Obrigado!",
+            text: `Produto marcado como comprado com sucesso.<a href="${product.link}" class="text-sm text-secondary align-center block margin-top-lg" target="_blank">${product.name}</a>`,
+            type: "success",
+            html: true,
+            confirmButtonColor: "#FF564A"
+          });
         } else {
           swal.showInputError("Senha incorreta!");
           return false
@@ -719,7 +726,7 @@ app.controller('PublicConfirmationCtrl', function($scope, $rootScope, $window, $
 
   $scope.addConfirmation = function(confirmation) {
 
-    if (!$scope.confirmation.form.$valid) {
+    if (!$scope.form.$valid) {
       return;
     }
 
@@ -727,7 +734,7 @@ app.controller('PublicConfirmationCtrl', function($scope, $rootScope, $window, $
       name: confirmation.name,
       accept: confirmation.accept,
       adults: confirmation.adults,
-      children: confirmation.children,
+      children: confirmation.children || 0,
       email: confirmation.email,
       phone: confirmation.phone,
       message: confirmation.message
@@ -736,7 +743,12 @@ app.controller('PublicConfirmationCtrl', function($scope, $rootScope, $window, $
     EventService.confirmation(userId, ConfirmationNew)
       .then(function(result) {
         if (result.data.success) {
-          swal("Obrigado!", "Confirmação realizada com sucesso.", "success");
+          swal({
+            title: "Obrigado!",
+            text: "Confirmação realizada com sucesso.",
+            type: "success",
+            confirmButtonColor: "#FF564A"
+          });
           $scope.confirmation = {
             name: '',
             accept: '',
@@ -748,13 +760,12 @@ app.controller('PublicConfirmationCtrl', function($scope, $rootScope, $window, $
             message: ''
           };
         } else {
-          $scope.message = {
-            'status': true,
-            'type': 'error',
-            'text': result.data.message
-          };
+          swal({
+            title: "Oops!",
+            text: `Ocorreu um erro, por favor tente novamente. ${result.data.message}`,
+            type: "error"
+          });
         }
-        $window.scrollTo(0, angular.element(document.getElementById('header')).offsetTop);
       }, function(status, result) {
         $scope.message = {
           'status': true,
@@ -879,7 +890,12 @@ app.controller('PublicDonationCtrl', function($scope, $rootScope, $routeParams, 
             code: result.data.code
           }, {
             success: function(transactionCode) {
-              swal("Obrigado!", "Doação realizada com sucesso.", "success");
+              swal({
+                title: "Obrigado!",
+                text: "Doação realizada com sucesso.",
+                type: "success",
+                confirmButtonColor: "#FF564A"
+              });
               $scope.donation = {
                 name: '',
                 email: ''
@@ -890,11 +906,11 @@ app.controller('PublicDonationCtrl', function($scope, $rootScope, $routeParams, 
             location.href = "https://sandbox.pagseguro.uol.com.br/v2/checkout/payment.html?code=" + code;
           }
         } else {
-          $scope.message = {
-            'status': true,
-            'type': 'error',
-            'text': result.data.message
-          };
+          swal({
+            title: "Oops!",
+            text: `Ocorreu um erro, por favor tente novamente. ${result.data.message}`,
+            type: "error"
+          });
         }
       }, function(status, result) {
         $scope.message = {

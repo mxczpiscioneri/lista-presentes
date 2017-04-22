@@ -1,5 +1,5 @@
 <!-- header -->
-<ng-include ng-class="needPassword ? 'hidden' : ''" src="'views/inc_header.html'"></ng-include>
+<ng-include src="'views/inc_header.html'"></ng-include>
 <!-- banner -->
 <div ng-show="event" id="banner" class="grid-container-fluid margin-top-xs">
   <div class="grid-container">
@@ -74,7 +74,7 @@
           <p vertilize class="text-sm text-default block">{{product.name}}</a>
           <p class="text-xs text-default margin-top-sm margin-bottom-sm">De: <span class="text-lg text-primary bold">R$ {{product.pricemin}}</span></p>
           <p class="text-xs text-default clear-margin">Até: <span class="text-md text-primary bold">R$ {{product.pricemax}}</span></p>
-          <a href="{{product.link}}" target="_blank" class="text-sm text-primary align-center block margin-top-md margin-bottom-lg">Comprar aqui</a>
+          <a href="{{product.link}}" target="_blank" class="text-sm text-secondary align-center block margin-top-md margin-bottom-lg">Comprar aqui</a>
           <button ng-click="buy(product)" class="btn-lg btn-primary">Marcar como comprado!</button>
         </div>
       </li>
@@ -90,4 +90,4 @@
   </div>
 </div>
 <!-- footer -->
-<ng-include ng-class="needPassword ? 'hidden' : ''" src="'views/inc_footer.html'"></ng-include>
+<ng-include src="'views/inc_footer.html'"></ng-include>

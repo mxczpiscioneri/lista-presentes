@@ -30,7 +30,7 @@
   <div class="grid-row">
     <div class="grid-xs-12">
       <div class="bg-white box-shadow padding-top-md padding-right-xl padding-bottom-md padding-left-xl">
-        <form name="confirmation.form">
+        <form name="form">
           <div class="grid-row">
             <div class="grid-xs-12">
               <h2 class="text-lg text-default clear-margin">Confirmação de Presença</h2>
@@ -64,7 +64,7 @@
             </div>
             <div ng-show="confirmation.accept == 'true'" class="grid-md-4 grid-xs-12 margin-bottom-xl">
               <label class="text-sm text-default">Número de crianças:</label>
-              <input id="children" class="field text-field text-field-lg" type="number" mask="9" ng-model="confirmation.children" required>
+              <input id="children" class="field text-field text-field-lg" type="number" mask="9" ng-model="confirmation.children">
             </div>
           </div>
           <div class="grid-row margin-bottom-xl">
