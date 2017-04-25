@@ -611,6 +611,7 @@ app.controller('PublicCtrl', function($scope, $rootScope, $routeParams, $locatio
       $rootScope.isLoading = false;
 
       if (result.data.success) {
+        // Verify password in event
         if (result.data.password) {
           $scope.needPassword = true;
         }
@@ -704,9 +705,10 @@ app.controller('ConfirmationsCtrl', function($scope, $rootScope, $sessionStorage
     });
 });
 
-app.controller('PublicConfirmationCtrl', function($scope, $rootScope, $window, $routeParams, EventService) {
+app.controller('PublicConfirmationCtrl', function($scope, $rootScope, $routeParams, EventService) {
 
   var userId;
+  $scope.needPassword = false;
 
   EventService.findByName($routeParams.slug)
     .then(function(result) {
@@ -714,6 +716,10 @@ app.controller('PublicConfirmationCtrl', function($scope, $rootScope, $window, $
       $rootScope.isLoading = false;
 
       if (result.data.success) {
+        // Verify password in event
+        if (result.data.password) {
+          $scope.needPassword = true;
+        }
         $scope.event = result.data.data.events[0];
         userId = result.data.data._id;
         $scope.confirmation = { accept: "true" };
@@ -740,7 +746,34 @@ app.controller('PublicConfirmationCtrl', function($scope, $rootScope, $window, $
       message: confirmation.message
     };
 
-    EventService.confirmation(userId, ConfirmationNew)
+    if ($scope.needPassword) {
+      swal({
+          title: "Digite a senha",
+          text: "Por favor, insira a senha que veio no convite:",
+          type: "input",
+          showCancelButton: true,
+          closeOnConfirm: false,
+          animation: "slide-from-top",
+          inputPlaceholder: "Digite a senha",
+          confirmButtonColor: "#FF564A"
+        },
+        function(inputValue) {
+          if (inputValue === false) return false;
+
+          if (inputValue === "") {
+            swal.showInputError("Por favor, digite a senha!");
+            return false
+          }
+
+          confirm(ConfirmationNew, inputValue);
+        });
+    } else {
+      confirm(ConfirmationNew, false);
+    }
+  }
+
+  function confirm(ConfirmationNew, password) {
+    EventService.confirmation(userId, ConfirmationNew, password)
       .then(function(result) {
         if (result.data.success) {
           swal({
@@ -760,11 +793,8 @@ app.controller('PublicConfirmationCtrl', function($scope, $rootScope, $window, $
             message: ''
           };
         } else {
-          swal({
-            title: "Oops!",
-            text: `Ocorreu um erro, por favor tente novamente. ${result.data.message}`,
-            type: "error"
-          });
+          swal.showInputError("Senha incorreta!");
+          return false
         }
       }, function(status, result) {
         $scope.message = {
@@ -772,18 +802,8 @@ app.controller('PublicConfirmationCtrl', function($scope, $rootScope, $window, $
           'type': 'error',
           'text': 'Erro!'
         };
-        $window.scrollTo(0, angular.element(document.getElementById('header')).offsetTop);
       });
   }
-
-  // Close alert
-  $scope.closeAlert = function() {
-    $scope.message = {
-      'status': false,
-      'type': '',
-      'text': ''
-    };
-  };
 });
 
 app.controller('DonationsCtrl', function($scope, $rootScope, $sessionStorage, EventService) {
