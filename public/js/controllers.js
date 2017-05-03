@@ -604,6 +604,7 @@ app.controller('PublicCtrl', function($scope, $rootScope, $routeParams, $locatio
 
   var userId;
   $scope.needPassword = false;
+  $scope.S3_ENDPOINT = S3_ENDPOINT;
 
   EventService.findByName($routeParams.slug)
     .then(function(result) {
@@ -709,6 +710,7 @@ app.controller('PublicConfirmationCtrl', function($scope, $rootScope, $routePara
 
   var userId;
   $scope.needPassword = false;
+  $scope.S3_ENDPOINT = S3_ENDPOINT;
 
   EventService.findByName($routeParams.slug)
     .then(function(result) {
@@ -870,6 +872,7 @@ app.controller('DonationsCtrl', function($scope, $rootScope, $sessionStorage, Ev
 app.controller('PublicDonationCtrl', function($scope, $rootScope, $routeParams, $location, EventService) {
 
   var userId;
+  $scope.S3_ENDPOINT = S3_ENDPOINT;
 
   EventService.findByName($routeParams.slug)
     .then(function(result) {

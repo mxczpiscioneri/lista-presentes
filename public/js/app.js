@@ -1,6 +1,7 @@
 var app = angular.module('myApp', ['ngRoute', 'ngStorage', 'ngFileUpload', 'angular.vertilize']);
 
 var API_ENDPOINT = "https://listadepresentes-api.herokuapp.com/api";
+var S3_ENDPOINT = "https://s3-sa-east-1.amazonaws.com/listadepresentes/cover/";
 
 app.config(function($routeProvider, $locationProvider, $httpProvider) {
 
