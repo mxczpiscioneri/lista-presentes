@@ -191,28 +191,33 @@ app.controller('DashboardCtrl', function($scope, $rootScope, $location, $session
   }
 });
 
-app.controller('EventCtrl', function($scope, $rootScope, $sessionStorage, $window, UserService, EventService) {
+app.controller('EventCtrl', function($scope, $rootScope, $sessionStorage, $window, $location, UserService, EventService) {
 
   var userId = $sessionStorage.user;
   $scope.fileUploaded = false;
   $scope.checkPassword = "false";
   $scope.createSlug = true;
+  $scope.S3_ENDPOINT = S3_ENDPOINT;
 
   EventService.findById(userId)
     .then(function(data) {
       // Remove loader
       $rootScope.isLoading = false;
+      $scope.imageCustom = false;
 
       if (data.data.success) {
         data.data.data.date = new Date(data.data.data.date);
         $scope.event = data.data.data;
         if (!$scope.event.image) {
           $scope.event.image = "cover-default1.jpg";
+        } else if ($scope.event.image != "cover-default1.jpg" && $scope.event.image != "cover-default2.jpg" && $scope.event.image != "cover-default3.jpg" && $scope.event.image != "cover-default4.jpg") {
+          $scope.imageCustom = data.data.data.image;
         }
         $scope.checkPassword = data.data.data.password ? "true" : "false";
         if (data.data.data.slug) {
           $scope.createSlug = false;
         }
+        $scope.EVENT_URL = $location.protocol() + "://" + location.host + "/" + data.data.data.slug;
       } else {
         $scope.message = {
           'status': true,
@@ -280,6 +285,9 @@ app.controller('EventCtrl', function($scope, $rootScope, $sessionStorage, $windo
       .then(function(resp) {
         if (resp.data.success) {
           $scope.event.date = new Date($scope.event.date).toLocaleDateString();
+          if ($scope.event.image == "cover-default1.jpg" || $scope.event.image == "cover-default2.jpg" || $scope.event.image == "cover-default3.jpg" || $scope.event.image == "cover-default4.jpg") {
+            $scope.imageCustom = false;
+          }
           $scope.message = {
             'status': true,
             'type': 'success',
@@ -724,7 +732,9 @@ app.controller('PublicConfirmationCtrl', function($scope, $rootScope, $routePara
         }
         $scope.event = result.data.data.events[0];
         userId = result.data.data._id;
-        $scope.confirmation = { accept: "true" };
+        $scope.confirmation = {
+          accept: "true"
+        };
       } else {
         $location.path("/404");
       }

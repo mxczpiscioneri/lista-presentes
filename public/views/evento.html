@@ -37,7 +37,7 @@
             <div class="grid-xs-12">
               <label class="text-sm text-default">Site:</label>
               <input id="slug" class="field text-field text-field-lg" type="text" ng-model="event.slug" required>
-              <a ng-show="event.slug" class="text-xs text-secondary slug" href="http://presentes.matheusemarcela.com/{{event.slug}}" target="_blank">http://presentes.matheusemarcela.com/{{event.slug}}</a>
+              <a ng-show="event.slug" class="text-xs text-secondary slug" href="{{EVENT_URL}}" target="_blank">{{EVENT_URL}}</a>
             </div>
           </div>
           <div class="grid-row">
@@ -74,41 +74,48 @@
               <label class="radio-buttom-check relative inline-block align-center pointer">
                 <input type="radio" class="hidden" ng-model="event.image" value="cover-default1.jpg">
                 <span class="absolute position-top position-left text-xl text-white bg-primary icon-md hidden">&#10004;</span>
-                <img ng-src="/uploads/cover-default1.jpg" alt="Capa padrão 1" class="img">
-                Capa 1
+                <img src="{{S3_ENDPOINT}}cover-default1.jpg" alt="Capa padrão 1" class="img">
+                Capa Padrão 1
               </label>
             </div>
             <div class="grid-md-3 grid-sm-6 grid-xs-12 margin-bottom-lg">
               <label class="radio-buttom-check relative inline-block align-center pointer">
                 <input type="radio" class="hidden" ng-model="event.image" value="cover-default2.jpg">
                 <span class="absolute position-top position-left text-xl text-white bg-primary icon-md hidden">&#10004;</span>
-                <img ng-src="/uploads/cover-default2.jpg" alt="Capa padrão 2" class="img">
-                Capa 2
+                <img src="{{S3_ENDPOINT}}cover-default2.jpg" alt="Capa padrão 2" class="img">
+                Capa Padrão 2
               </label>
             </div>
             <div class="grid-md-3 grid-sm-6 grid-xs-12 margin-bottom-lg">
               <label class="radio-buttom-check relative inline-block align-center pointer">
                 <input type="radio" class="hidden" ng-model="event.image" value="cover-default3.jpg">
                 <span class="absolute position-top position-left text-xl text-white bg-primary icon-md hidden">&#10004;</span>
-                <img ng-src="/uploads/cover-default3.jpg" alt="Capa padrão 3" class="img">
-                Capa 3
+                <img src="{{S3_ENDPOINT}}cover-default3.jpg" alt="Capa padrão 3" class="img">
+                Capa Padrão 3
               </label>
             </div>
             <div class="grid-md-3 grid-sm-6 grid-xs-12 margin-bottom-lg">
               <label class="radio-buttom-check relative inline-block align-center pointer">
                 <input type="radio" class="hidden" ng-model="event.image" value="cover-default4.jpg">
                 <span class="absolute position-top position-left text-xl text-white bg-primary icon-md hidden">&#10004;</span>
-                <img ng-src="/uploads/cover-default4.jpg" alt="Capa padrão 4" class="img">
-                Capa 4
+                <img src="{{S3_ENDPOINT}}cover-default4.jpg" alt="Capa padrão 4" class="img">
+                Capa Padrão 4
               </label>
             </div>
-            <div class="grid-xs-12 overflow-hidden">
-              <label class="block margin-top-sm">
-                Capa personalizada:
-                <!-- <img ng-show="fileUploaded" ngf-thumbnail="'/uploads/' + event.image" class="img"> -->
-                <input type="file" class="text-xs" ngf-select ng-model="event.image" ngf-pattern="'image/*'" accept="image/*" ngf-max-size="5MB" ng-Change="fileChanged()">
-                <i ng-show="event.form.image.$error.maxSize">Arquivo muito grande {{event.image.size / 1000000|number:1}}MB: max 5MB</i>
+            <div class="grid-md-3 grid-sm-6 grid-xs-12 margin-bottom-lg" ng-show="imageCustom">
+              <label class="radio-buttom-check relative inline-block align-center pointer">
+                <input type="radio" class="hidden" ng-model="event.image" value="{{imageCustom}}">
+                <span class="absolute position-top position-left text-xl text-white bg-primary icon-md hidden">&#10004;</span>
+                <img src="{{S3_ENDPOINT}}{{imageCustom}}" alt="Capa personalizada" class="img">
               </label>
+            </div>
+            <div class="grid-sm-6 grid-xs-12 margin-bottom-lg">
+              <span class="text-sm text-default inline-block margin-top-xl">Capa personalizada:</span>
+              <label class="btn-sm btn-secondary inline-block clear-width padding-x-sm">Escolher imagem
+                <input type="file" class="text-xs hidden" ngf-select ng-model="event.image" ngf-pattern="'image/*'" accept="image/*" ngf-max-size="5MB" ng-Change="fileChanged()">
+              </label>
+              <span class="text-xs text-default inline-block margin-top-md">{{event.image.name}}</span>
+              <i ng-show="event.form.image.$error.maxSize">Arquivo muito grande {{event.image.size / 1000000|number:1}}MB: max 5MB</i>
             </div>
           </div>
           <hr>
