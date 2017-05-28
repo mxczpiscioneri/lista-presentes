@@ -25,7 +25,7 @@
         </div>
         <div class="grid-row margin-top-xl">
           <form>
-            <div class="grid-lg-3 grid-sm-12 margin-bottom-sm">
+            <div class="grid-lg-3 grid-sm-12 grid-xs-12 margin-bottom-sm">
               <label for="filter-price" class="text-xs text-default margin-bottom-xs">Ordenar por:</label>
               <select ng-model="sort" ng-change="sorting()" class="field text-field-lg select">
                 <option ng-selected="sort == rate" value="rate">Mais populares</option>
@@ -33,9 +33,13 @@
                 <option ng-selected="sort == dprice" value="dprice">Maior preço</option>
               </select>
             </div>
-            <div class="grid-lg-9 grid-sm-12 margin-bottom-sm">
-              <label for="filter-price" class="text-xs text-default margin-bottom-xs">Procurar produtos:</label>
-              <input ng-model="search" ng-model-options='{ debounce: 300 }' type="text" id="search" name="search" class="field text-field-lg" placeholder="Digite o nome do produto...">
+            <div class="grid-lg-7 grid-sm-9 grid-xs-8 margin-bottom-sm">
+              <label class="text-xs text-default margin-bottom-xs">Procurar produtos:</label>
+              <input ng-model="search" type="text" id="search" name="search" class="field text-field-lg" placeholder="Digite o nome do produto...">
+            </div>
+            <div class="grid-lg-2 grid-sm-3 grid-xs-4 margin-bottom-sm">
+              <label class="text-xs text-default margin-bottom-xs">&nbsp;</label>
+              <button class="btn btn-lg btn-primary" ng-click="searchBuscape()">Buscar</button>
             </div>
           </form>
         </div>

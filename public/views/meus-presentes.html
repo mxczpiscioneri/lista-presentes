@@ -20,14 +20,6 @@
             <h2 class="text-lg text-default clear-margin">Meus presentes</h2>
           </div>
         </div>
-        <div ng-show="myPresents.length > 0" class="grid-row margin-top-xl">
-          <form>
-            <div class="grid-xs-12">
-              <label for="filter-price" class="text-xs text-default margin-bottom-xs">Procurar produtos:</label>
-              <input ng-model="search" ng-model-options='{ debounce: 200 }' type="text" id="search" name="search" class="field text-field-lg" placeholder="Digite o nome do produto...">
-            </div>
-          </form>
-        </div>
         <div class="grid-row margin-top-xl">
           <ul vertilize-container class="list list-horizontal">
             <li ng-repeat="item in myPresents | filter: search" class="list-item grid-xl-3 grid-lg-4 grid-sm-6 grid-xs-12 margin-bottom-lg">

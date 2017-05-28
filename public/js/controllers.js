@@ -390,16 +390,24 @@ app.controller('PresentsCtrl', function($scope, $rootScope, $sessionStorage, $wi
 
   $scope.getProducts = function(page, sort) {
 
-    var search = $scope.search ? $scope.search : 'eletrodomestico';
     // Show loader
     $scope.isLoadingBuscape = true;
+    $scope.message = {
+      'status': false,
+      'type': '',
+      'text': ''
+    };
 
+    var search = $scope.search ? $scope.search : 'eletrodomestico';
     ProductService.searchBuscape(search, page, sort)
       .then(function(data) {
+        // Clear products
+        $scope.products = [];
+
         if (data.status == 200) {
 
           // Check if Buscape product has already been added
-          if (data.data.product.length > 0 && $scope.myList) {
+          if (data.data.product && data.data.product.length > 0 && $scope.myList) {
             for (var i = 0; i < data.data.product.length; i++) {
               for (var j = 0; j < $scope.myList.length; j++) {
                 if (data.data.product[i].product.id == $scope.myList[j].buscapeId) {
@@ -408,6 +416,12 @@ app.controller('PresentsCtrl', function($scope, $rootScope, $sessionStorage, $wi
                 }
               }
             }
+          } else {
+            $scope.message = {
+              'status': true,
+              'type': 'error',
+              'text': 'Nenhum produto encontrado!'
+            };
           }
           $scope.products = data.data.product;
 
@@ -522,9 +536,9 @@ app.controller('PresentsCtrl', function($scope, $rootScope, $sessionStorage, $wi
     }
   }
 
-  $scope.$watch('search', function() {
+  $scope.searchBuscape = function() {
     $scope.getProducts(1, $scope.sort);
-  });
+  }
 
   // Open modal
   $scope.showModal = function() {
@@ -532,7 +546,7 @@ app.controller('PresentsCtrl', function($scope, $rootScope, $sessionStorage, $wi
       templateUrl: "/views/modal-add-produto.html",
       controller: "PresentsCtrl"
     });
-  };
+  }
 
   // Check if uploaded
   $scope.fileChanged = function() {
