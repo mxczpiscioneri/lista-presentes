@@ -366,6 +366,7 @@ app.controller('PresentsCtrl', function($scope, $rootScope, $sessionStorage, $wi
   $scope.sort = 'rate';
   $scope.isLoadingBuscape = true;
   $scope.fileUploaded = false;
+  $scope.buttonLoading = false;
 
   ProductService.findAll(userId)
     .then(function(result) {
@@ -453,7 +454,10 @@ app.controller('PresentsCtrl', function($scope, $rootScope, $sessionStorage, $wi
       });
   }
 
-  $scope.add = function(product) {
+  $scope.add = function(product, index) {
+    // Load button
+    $scope.buttonLoading = true;
+    document.getElementById("btnLoadingA" + index).className = 'btnLoading';
 
     var ProductNew = {
       buscapeId: product.id,
@@ -488,6 +492,8 @@ app.controller('PresentsCtrl', function($scope, $rootScope, $sessionStorage, $wi
             'text': result.data.message
           };
         }
+        $scope.buttonLoading = false;
+        document.getElementById("btnLoadingA" + index).className = 'btnLoading hidden';
       }, function(status, result) {
         $scope.message = {
           'status': true,
@@ -497,7 +503,11 @@ app.controller('PresentsCtrl', function($scope, $rootScope, $sessionStorage, $wi
       });
   }
 
-  $scope.remove = function(productId) {
+  $scope.remove = function(productId, index) {
+    // Load button
+    $scope.buttonLoading = true;
+    document.getElementById("btnLoadingR" + index).className = 'btnLoading';
+
     ProductService.delete(userId, productId)
       .then(function(result) {
         if (result.data.success) {
@@ -519,6 +529,8 @@ app.controller('PresentsCtrl', function($scope, $rootScope, $sessionStorage, $wi
             'text': data.data.message
           };
         }
+        $scope.buttonLoading = false;
+        document.getElementById("btnLoadingR" + index).className = 'btnLoading hidden';
       }, function(status, data) {
         $scope.message = {
           'status': true,
@@ -624,6 +636,7 @@ app.controller('PresentsCtrl', function($scope, $rootScope, $sessionStorage, $wi
 app.controller('MyListCtrl', function($scope, $rootScope, $sessionStorage, ProductService) {
 
   var userId = $sessionStorage.user;
+  $scope.buttonLoading = false;
 
   ProductService.findAll(userId)
     .then(function(result) {
@@ -647,7 +660,11 @@ app.controller('MyListCtrl', function($scope, $rootScope, $sessionStorage, Produ
       };
     });
 
-  $scope.remove = function(productId) {
+  $scope.remove = function(productId, index) {
+    // Load button
+    $scope.buttonLoading = true;
+    document.getElementById("btnLoadingR" + index).className = 'btnLoading';
+
     ProductService.delete(userId, productId)
       .then(function(data) {
         if (data.data.success) {
@@ -666,6 +683,8 @@ app.controller('MyListCtrl', function($scope, $rootScope, $sessionStorage, Produ
             'text': data.data.message
           };
         }
+        $scope.buttonLoading = false;
+        document.getElementById("btnLoadingR" + index).className = 'btnLoading hidden';
       }, function(status, data) {
         $scope.message = {
           'status': true,
