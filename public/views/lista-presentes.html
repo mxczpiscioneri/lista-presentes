@@ -52,15 +52,15 @@
             </div>
             <div class="shadow"></div>
           </div>
-          <ul vertilize-container class="list list-horizontal">
+          <ul class="list list-horizontal">
             <li ng-repeat="item in products" class="list-item grid-xl-3 grid-lg-4 grid-sm-6 grid-xs-12 margin-bottom-lg">
-              <div class="bg-white bd-xs bd-solid bd-gray bd-radius-md padding-lg">
+              <div class="bg-white bd-xs bd-solid bd-gray bd-radius-md padding-lg product">
                 <div class="align-center margin-bottom-sm">
                   <a href="{{item.product.links[0].link.url}}" target="_blank">
-                    <img class="img block" ng-src="{{item.product.thumbnail.url ? item.product.thumbnail.url : '../img/unavailable.jpg'}}" alt="{{item.product.productname}}" title="{{item.product.productname}}">
+                    <img class="img block" ng-src="{{item.product.thumbnail.url ? item.product.thumbnail.url : '../img/unavailable.jpg'}}" alt="{{item.product.productname}}" title="{{item.product.productname}}" loaded-img>
                   </a>
                 </div>
-                <a vertilize class="text-xs text-default block" title="{{item.product.productname}}" href="{{item.product.links[0].link.url}}" target="_blank">{{item.product.productname}}</a>
+                <a class="text-xs text-default block" title="{{item.product.productname}}" href="{{item.product.links[0].link.url}}" target="_blank">{{item.product.productname}}</a>
                 <p ng-show="item.product.pricemin" class="text-xs text-default margin-top-sm margin-bottom-sm">De: <span class="text-md text-primary bold">R$ {{item.product.pricemin}}</span></p>
                 <p ng-show="item.product.pricemax" class="text-xs text-default clear-margin">Até: <span class="text-sm text-primary bold">R$ {{item.product.pricemax}}</span></p>
                 <button ng-hide="item.product.added" ng-click="add(item.product)" class="btn-md btn-primary margin-top-sm">+ ADICIONAR</button>

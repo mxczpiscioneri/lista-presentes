@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ngRoute', 'ngStorage', 'ngFileUpload', 'angular.vertilize', 'pathgather.popeye']);
+var app = angular.module('myApp', ['ngRoute', 'ngStorage', 'ngFileUpload', 'pathgather.popeye']);
 
 var API_ENDPOINT = "https://listadepresentes-api.herokuapp.com/api";
 var S3_ENDPOINT = "https://s3-sa-east-1.amazonaws.com/listadepresentes";

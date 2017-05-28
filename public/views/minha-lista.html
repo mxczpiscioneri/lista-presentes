@@ -21,15 +21,15 @@
           </div>
         </div>
         <div class="grid-row margin-top-xl">
-          <ul vertilize-container class="list list-horizontal">
+          <ul class="list list-horizontal">
             <li ng-repeat="item in myList | filter: search" class="list-item grid-xl-3 grid-lg-4 grid-sm-6 grid-xs-12 margin-bottom-lg">
-              <div class="bg-white bd-xs bd-solid bd-gray bd-radius-md padding-lg">
+              <div class="bg-white bd-xs bd-solid bd-gray bd-radius-md padding-lg product">
                 <div class="align-center margin-bottom-sm">
                   <a href="{{item.link}}" target="_blank">
-                    <img class="img block" ng-src="{{item.image ? item.image : '../img/unavailable.jpg'}}" alt="{{item.name}}" title="{{item.name}}">
+                    <img class="img block" ng-src="{{item.image ? item.image : '../img/unavailable.jpg'}}" alt="{{item.name}}" title="{{item.name}}" loaded-img>
                   </a>
                 </div>
-                <a vertilize class="text-xs text-default block" title="{{item.name}}" href="{{item.link}}" target="_blank">{{item.name}}</a>
+                <a class="text-xs text-default block" title="{{item.name}}" href="{{item.link}}" target="_blank">{{item.name}}</a>
                 <p ng-show="item.pricemin" class="text-xs text-default margin-top-sm margin-bottom-sm">De: <span class="text-md text-primary bold">R$ {{item.pricemin}}</span></p>
                 <p ng-show="item.pricemax" class="text-xs text-default clear-margin">Até: <span class="text-sm text-primary bold">R$ {{item.pricemax}}</span></p>
                 <button ng-click="remove(item._id)" class="btn-md btn-default margin-top-sm">- REMOVER</button>
