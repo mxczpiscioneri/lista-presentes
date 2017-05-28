@@ -606,6 +606,8 @@ app.controller('PresentsCtrl', function($scope, $rootScope, $sessionStorage, $wi
   }
 
   $scope.create = function(ProductNew) {
+    $scope.buttonLoading = true;
+
     ProductService.add(userId, ProductNew)
       .then(function(result) {
         if (result.data.success) {
@@ -621,6 +623,7 @@ app.controller('PresentsCtrl', function($scope, $rootScope, $sessionStorage, $wi
             'text': 'Erro!'
           };
         }
+        $scope.buttonLoading = false;
         Popeye.closeCurrentModal()
       }, function(error) {
         $scope.message = {
