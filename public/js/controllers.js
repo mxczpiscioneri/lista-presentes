@@ -198,6 +198,7 @@ app.controller('EventCtrl', function($scope, $rootScope, $sessionStorage, $windo
   $scope.checkPassword = "false";
   $scope.createSlug = true;
   $scope.S3_ENDPOINT = S3_ENDPOINT;
+  $scope.buttonLoading = false;
 
   EventService.findById(userId)
     .then(function(data) {
@@ -250,6 +251,8 @@ app.controller('EventCtrl', function($scope, $rootScope, $sessionStorage, $windo
       return;
     }
 
+    $scope.buttonLoading = true;
+
     // Check if uploaded
     if ($scope.fileUploaded) {
       $scope.upload($scope.event.image);
@@ -300,6 +303,7 @@ app.controller('EventCtrl', function($scope, $rootScope, $sessionStorage, $windo
             'text': 'Erro!'
           };
         }
+        $scope.buttonLoading = false;
         $window.scrollTo(0, angular.element(document.getElementById('header')).offsetTop);
       }, function(error) {
         if (error.data.message == 'Duplicate slug') {

@@ -154,7 +154,7 @@
           </div>
           <div class="grid-row margin-bottom-md">
             <div class="grid-lg-2 grid-lg-offset-10 grid-md-3 grid-md-offset-9  grid-sm-4 grid-sm-offset-8  grid-xs-12">
-              <button class="btn-lg btn-primary" ng-click="editEvent()">Salvar</button>
+              <button class="btn-lg btn-primary" ng-click="editEvent()" ng-disabled="buttonLoading"><i class="btnLoading" ng-show="buttonLoading"></i> Salvar</button>
             </div>
           </div>
         </form>

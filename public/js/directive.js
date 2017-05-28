@@ -2,7 +2,6 @@ app.directive('loadedImg', function() {
   return {
     link: function(scope, element, attrs) {
       element.bind("load", function(e) {
-        console.log("load img")
         equalHeight("product");
       });
     }

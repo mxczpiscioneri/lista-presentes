@@ -72,8 +72,8 @@
             <img title="{{product.name}}" class="img margin-bottom-sm" alt="{{product.name}}"  title="{{product.name}}" src="{{product.image ? product.image : '../img/unavailable.jpg'}}" loaded-img>
           </div>
           <p class="text-sm text-default block">{{product.name}}</a>
-          <p class="text-xs text-default margin-top-sm margin-bottom-sm">De: <span class="text-lg text-primary bold">R$ {{product.pricemin}}</span></p>
-          <p class="text-xs text-default clear-margin">Até: <span class="text-md text-primary bold">R$ {{product.pricemax}}</span></p>
+          <p ng-show="product.pricemin" class="text-xs text-default margin-top-sm margin-bottom-sm">De: <span class="text-lg text-primary bold">R$ {{product.pricemin}}</span></p>
+          <p ng-show="product.pricemax" class="text-xs text-default clear-margin">Até: <span class="text-md text-primary bold">R$ {{product.pricemax}}</span></p>
           <a href="{{product.link}}" target="_blank" class="text-sm text-secondary align-center block margin-top-md margin-bottom-lg">Comprar aqui</a>
           <button ng-click="buy(product)" class="btn-lg btn-primary">Marcar como comprado!</button>
         </div>
