@@ -575,6 +575,8 @@ app.controller('PresentsCtrl', function($scope, $rootScope, $sessionStorage, $wi
       return;
     }
 
+    $scope.buttonLoading = true;
+
     // Check if uploaded
     if ($scope.fileUploaded) {
       ProductService.upload(userId, $scope.modal.image)
@@ -590,6 +592,7 @@ app.controller('PresentsCtrl', function($scope, $rootScope, $sessionStorage, $wi
             $scope.create(ProductNew);
           } else {
             console.log('Error: ' + result.status);
+            $scope.buttonLoading = false;
           }
         }, function(result) {
           console.log('Error status: ' + result.status);
@@ -606,8 +609,6 @@ app.controller('PresentsCtrl', function($scope, $rootScope, $sessionStorage, $wi
   }
 
   $scope.create = function(ProductNew) {
-    $scope.buttonLoading = true;
-
     ProductService.add(userId, ProductNew)
       .then(function(result) {
         if (result.data.success) {
@@ -633,7 +634,6 @@ app.controller('PresentsCtrl', function($scope, $rootScope, $sessionStorage, $wi
         };
       });
   }
-
 });
 
 app.controller('MyListCtrl', function($scope, $rootScope, $sessionStorage, ProductService) {
