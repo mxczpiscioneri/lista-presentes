@@ -77,7 +77,7 @@ app.factory('EventService', function($http, Upload) {
   }
 });
 
-app.factory('ProductService', function($http) {
+app.factory('ProductService', function($http, Upload) {
   return {
     searchBuscape: function(search, page, sort) {
       return $http.get(API_ENDPOINT + '/products/search/' + search + '/' + page + '/' + sort);
@@ -102,6 +102,9 @@ app.factory('ProductService', function($http) {
     },
     delete: function(userId, productId) {
       return $http.delete(API_ENDPOINT + '/users/' + userId + '/products/' + productId);
+    },
+    upload: function(userId, fileUpload) {
+      return Upload.upload({ url: API_ENDPOINT + '/users/' + userId + '/products/upload/', data: { file: fileUpload } });
     }
   }
 });

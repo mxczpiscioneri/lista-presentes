@@ -355,12 +355,13 @@ app.controller('EventCtrl', function($scope, $rootScope, $sessionStorage, $windo
   }
 });
 
-app.controller('PresentsCtrl', function($scope, $rootScope, $sessionStorage, $window, ProductService) {
+app.controller('PresentsCtrl', function($scope, $rootScope, $sessionStorage, $window, Popeye, ProductService) {
 
   var userId = $sessionStorage.user;
   $scope.page = 1;
   $scope.sort = 'rate';
   $scope.isLoadingBuscape = true;
+  $scope.fileUploaded = false;
 
   ProductService.findAll(userId)
     .then(function(result) {
@@ -524,6 +525,82 @@ app.controller('PresentsCtrl', function($scope, $rootScope, $sessionStorage, $wi
   $scope.$watch('search', function() {
     $scope.getProducts(1, $scope.sort);
   });
+
+  // Open modal
+  $scope.showModal = function() {
+    var modal = Popeye.openModal({
+      templateUrl: "/views/modal-add-produto.html",
+      controller: "PresentsCtrl"
+    });
+  };
+
+  // Check if uploaded
+  $scope.fileChanged = function() {
+    $scope.fileUploaded = true;
+  }
+
+  // Create new product
+  $scope.saveNewProduct = function() {
+    if (!$scope.form.$valid) {
+      return;
+    }
+
+    // Check if uploaded
+    if ($scope.fileUploaded) {
+      ProductService.upload(userId, $scope.modal.image)
+        .then(function(result) {
+          if (result.data.success) {
+            var ProductNew = {
+              name: $scope.modal.name,
+              pricemin: $scope.modal.pricemin,
+              link: $scope.modal.link,
+              image: S3_ENDPOINT + '/product/' + result.data.data,
+              bought: 0
+            };
+            $scope.create(ProductNew);
+          } else {
+            console.log('Error: ' + result.status);
+          }
+        }, function(result) {
+          console.log('Error status: ' + result.status);
+        });
+    } else {
+      var ProductNew = {
+        name: $scope.modal.name,
+        pricemin: $scope.modal.pricemin,
+        link: $scope.modal.link,
+        bought: 0
+      };
+      $scope.create(ProductNew);
+    }
+  }
+
+  $scope.create = function(ProductNew) {
+    ProductService.add(userId, ProductNew)
+      .then(function(result) {
+        if (result.data.success) {
+          $scope.message = {
+            'status': true,
+            'type': 'success',
+            'text': 'Procuto criado e adicionado com sucesso.'
+          };
+        } else {
+          $scope.message = {
+            'status': true,
+            'type': 'error',
+            'text': 'Erro!'
+          };
+        }
+        Popeye.closeCurrentModal()
+      }, function(error) {
+        $scope.message = {
+          'status': true,
+          'type': 'error',
+          'text': 'Erro!'
+        };
+      });
+  }
+
 });
 
 app.controller('MyListCtrl', function($scope, $rootScope, $sessionStorage, ProductService) {

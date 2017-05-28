@@ -229,3 +229,15 @@ body {
   }
 }
 
+.popeye-modal-container {
+  background-color: rgba(0,0,0,0.7);
+}
+
+.popeye-modal-container .popeye-modal a.popeye-close-modal{
+  z-index: 1;
+}
+
+.popeye-modal-container .popeye-modal a.popeye-close-modal:after{
+  font-size: 32px;
+  color: #666;
+}

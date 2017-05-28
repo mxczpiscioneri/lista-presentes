@@ -1,0 +1,42 @@
+<div class="popeye-modal-container">
+  <div class="popeye-modal">
+    <a class="popeye-close-modal" href ng-click="$close()"></a>
+    <form name="form">
+      <div class="grid-row">
+        <div class="grid-xs-12">
+          <h2 class="text-lg text-default clear-margin">Adicione um produto</h2>
+        </div>
+      </div>
+      <div class="grid-row margin-top-xl margin-bottom-xl">
+        <div class="grid-xs-12">
+          <label class="text-sm text-default">Nome:</label>
+          <input id="name" class="field text-field text-field-lg" type="text" ng-model="modal.name" required>
+        </div>
+      </div>
+      <div class="grid-row">
+        <div class="grid-sm-4 grid-xs-12 margin-bottom-xl">
+          <label class="text-sm text-default">Preço:</label>
+          <input id="pricemin" class="field text-field text-field-lg" type="number" ng-model="modal.pricemin" step="0.01">
+        </div>
+        <div class="grid-sm-8 grid-xs-12 margin-bottom-xl">
+          <label class="text-sm text-default">Link:</label>
+          <input id="link" class="field text-field text-field-lg" type="text" ng-model="modal.link">
+        </div>
+      </div>
+      <div class="grid-row margin-bottom-xl">
+        <div class="grid-xs-12 grid-sm-4">
+          <label class="btn-sm btn-secondary inline-block clear-width padding-x-sm">Escolher imagem
+            <input type="file" class="text-xs hidden" ngf-select ng-model="modal.image" ngf-pattern="'image/*'" accept="image/*" ngf-max-size="5MB" ng-Change="fileChanged()">
+          </label>
+          <span class="text-xs text-default inline-block margin-top-md">{{modal.image.name}}</span>
+          <i ng-show="event.form.image.$error.maxSize">Arquivo muito grande {{event.image.size / 1000000|number:1}}MB: max 5MB</i>
+        </div>
+      </div>
+      <div class="grid-row margin-bottom-xl">
+        <div class="grid-md-2 grid-md-offset-10 grid-sm-3 grid-sm-offset-9 grid-xs-12">
+          <button class="btn-lg btn-primary" ng-click="saveNewProduct(modal)">Salvar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -34,12 +34,12 @@
               <div class="bg-white bd-xs bd-solid bd-gray bd-radius-md padding-lg">
                 <div class="align-center margin-bottom-sm">
                   <a href="{{item.link}}" target="_blank">
-                    <img class="img block" ng-src="{{item.image}}" alt="{{item.name}}" title="{{item.name}}">
+                    <img class="img block" ng-src="{{item.image ? item.image : '../img/unavailable.jpg'}}" alt="{{item.name}}" title="{{item.name}}">
                   </a>
                 </div>
                 <a vertilize class="text-xs text-default block" title="{{item.name}}" href="{{item.link}}" target="_blank">{{item.name}}</a>
-                <p class="text-xs text-default margin-top-sm margin-bottom-sm">De: <span class="text-md text-primary bold">R$ {{item.pricemin}}</span></p>
-                <p class="text-xs text-default clear-margin">Até: <span class="text-sm text-primary bold">R$ {{item.pricemax}}</span></p>
+                <p ng-show="item.pricemin" class="text-xs text-default margin-top-sm margin-bottom-sm">De: <span class="text-md text-primary bold">R$ {{item.pricemin}}</span></p>
+                <p ng-show="item.pricemax" class="text-xs text-default clear-margin">Até: <span class="text-sm text-primary bold">R$ {{item.pricemax}}</span></p>
                 <button ng-click="remove(item._id)" class="btn-md btn-default margin-top-sm">- REMOVER</button>
               </div>
             </li>

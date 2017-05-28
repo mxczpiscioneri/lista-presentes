@@ -16,8 +16,11 @@
     <div class="grid-md-9 grid-xs-12">
       <div class="bg-white box-shadow padding-top-md padding-right-xl padding-bottom-md padding-left-xl">
         <div class="grid-row">
-          <div class="grid-xs-12">
+          <div class="grid-xs-8 grid-sm-9">
             <h2 class="text-lg text-default clear-margin">Gerencie sua lista de presentes</h2>
+          </div>
+          <div class="grid-xs-4 grid-sm-3">
+            <button class="btn btn-sm btn-secondary" ng-click="showModal()">Criar produto</button>
           </div>
         </div>
         <div class="grid-row margin-top-xl">
@@ -54,8 +57,8 @@
                   </a>
                 </div>
                 <a vertilize class="text-xs text-default block" title="{{item.product.productname}}" href="{{item.product.links[0].link.url}}" target="_blank">{{item.product.productname}}</a>
-                <p class="text-xs text-default margin-top-sm margin-bottom-sm">De: <span class="text-md text-primary bold">R$ {{item.product.pricemin}}</span></p>
-                <p class="text-xs text-default clear-margin">Até: <span class="text-sm text-primary bold">R$ {{item.product.pricemax}}</span></p>
+                <p ng-show="item.product.pricemin" class="text-xs text-default margin-top-sm margin-bottom-sm">De: <span class="text-md text-primary bold">R$ {{item.product.pricemin}}</span></p>
+                <p ng-show="item.product.pricemax" class="text-xs text-default clear-margin">Até: <span class="text-sm text-primary bold">R$ {{item.product.pricemax}}</span></p>
                 <button ng-hide="item.product.added" ng-click="add(item.product)" class="btn-md btn-primary margin-top-sm">+ ADICIONAR</button>
                 <button ng-show="item.product.added" ng-click="remove(item.product._id)" class="btn-md btn-default margin-top-sm">- REMOVER</button>
               </div>

@@ -6,7 +6,7 @@
     <div class="grid-row">
       <div class="grid-xs-12">
         <a href="/{{event.slug}}" class="clear-decoration">
-          <img src="{{S3_ENDPOINT}}{{event.image}}" class="img block" alt="{{event.name}}">
+          <img src="{{S3_ENDPOINT}}/cover/{{event.image}}" class="img block" alt="{{event.name}}">
           <div class="shadow-banner absolute position-bottom position-left position-right padding-sm margin-left-sm margin-right-sm">
             <h1 class="text-xl text-white align-center clear-margin padding-top-xl">{{event.name}} &hearts; {{event.date | date:'dd/MM/yyyy'}}</h1>
           </div>
@@ -69,7 +69,7 @@
         <div class="bg-white bd-radius-md padding-lg box-shadow relative">
           <span class="text-xs text-white bg-darkgray bd-radius-md absolute position-top position-right padding-xs margin-sm">{{product.bought || 0}} comprados</span>
           <div class="align-center">
-            <img title="{{product.name}}" class="img margin-bottom-sm" alt="{{product.name}}"  title="{{product.name}}" src="{{product.image}}">
+            <img title="{{product.name}}" class="img margin-bottom-sm" alt="{{product.name}}"  title="{{product.name}}" src="{{product.image ? product.image : '../img/unavailable.jpg'}}">
           </div>
           <p vertilize class="text-sm text-default block">{{product.name}}</a>
           <p class="text-xs text-default margin-top-sm margin-bottom-sm">De: <span class="text-lg text-primary bold">R$ {{product.pricemin}}</span></p>
