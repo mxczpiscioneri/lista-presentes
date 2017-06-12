@@ -19,7 +19,7 @@
 <div ng-show="event.emailPagseguro && event.tokenPagseguro" class="grid-container-fluid margin-top-lg vaquinha padding-xl">
   <div class="grid-row">
     <div class="grid-xs-12">
-      <h2 class="text-lg text-white align-center margin-top-lg">Quer contribui para a vaquinha dos noivos?</h2>
+      <h2 class="text-lg text-white align-center margin-top-lg">Quer contribuir para a vaquinha dos noivos?</h2>
     </div>
   </div>
   <div class="grid-row">
@@ -67,7 +67,7 @@
     <ul class="list list-horizontal">
       <li ng-repeat="product in event.products | filter: search" class="list-item grid-lg-3 grid-md-4 grid-sm-6 grid-xs-12 margin-bottom-lg">
         <div class="bg-white bd-radius-md padding-lg box-shadow relative product">
-          <span class="text-xs text-white bg-darkgray bd-radius-md absolute position-top position-right padding-xs margin-sm">{{product.bought || 0}} comprados</span>
+          <span class="text-xs text-white bg-secondary bd-radius-md absolute position-top position-right padding-xs margin-sm">{{product.bought || 0}} comprado{{product.bought == 1 ? "" : "s"}}</span>
           <div class="align-center">
             <img title="{{product.name}}" class="img margin-bottom-sm" alt="{{product.name}}"  title="{{product.name}}" src="{{product.image ? product.image : '../img/unavailable.jpg'}}" loaded-img>
           </div>
